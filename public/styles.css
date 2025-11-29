@@ -17,7 +17,7 @@ th, td { padding:8px; border-bottom:1px solid rgba(255,255,255,0.06); text-align
 select { width:100%; padding:4px }
 #totals { margin-top:8px }
 #visual { flex:1; display:flex; flex-direction:column; align-items:center }
-#shuttleSvg { background: radial-gradient(circle at 20% 0%,#123867,#021327); border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.6); width:100%; max-width:600px }
+#shuttleSvg { background: radial-gradient(circle at 20% 0%,#123867,#021327); border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.6); width:100%; max-width:600px; transform-origin: 50% 75%; }
 .shuttle-part { fill:url(#bodyGradient); stroke:#09162b; stroke-width:2 }
 .shuttle-window { fill:#00172b }
 .engine { fill:#9ea8b8 }
@@ -61,14 +61,15 @@ select { width:100%; padding:4px }
 }
 
 @keyframes launchPath {
-  0% { transform: translateY(60px) scale(1); }
-  60% { transform: translate(-40px,-160px) scale(0.95); }
-  100% { transform: translate(-80px,-230px) scale(0.9); }
+  0%   { transform: translateY(0) scale(1); }
+  20%  { transform: translateY(-10px) scale(1); }
+  60%  { transform: translate(-20px,-120px) scale(0.97); }
+  100% { transform: translate(-60px,-210px) scale(0.9); }
 }
 
 @keyframes spaceDrift {
-  0% { transform: translate(-80px,-230px) scale(0.9) rotate(0deg); }
-  100% { transform: translate(-60px,-250px) scale(0.9) rotate(-4deg); }
+  0% { transform: translate(-60px,-210px) scale(0.9) rotate(0deg); }
+  100% { transform: translate(-40px,-230px) scale(0.9) rotate(-4deg); }
 }
 
 @keyframes explode {
@@ -77,3 +78,12 @@ select { width:100%; padding:4px }
 }
 
 #summaryTable { background: rgba(255,255,255,0.03); padding:12px; border-radius:6px }
+
+#summaryProgressContainer { margin-top:12px; background: rgba(255,255,255,0.04); border-radius:999px; overflow:hidden; height:10px; }
+#summaryProgressBar { width:0%; height:100%; background: linear-gradient(90deg,#2bff88,#2b7cff); transition: width 0.2s linear; }
+.summary-progress-anim { animation: summaryProgress 3s linear forwards; }
+
+@keyframes summaryProgress {
+  0% { width:0%; }
+  100% { width:100%; }
+}

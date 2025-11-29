@@ -42,6 +42,8 @@ const startBtn = document.getElementById('startBtn');
 const leaveRoomBtn = document.getElementById('leaveRoomBtn');
 const summarySection = document.getElementById('summary');
 const summaryTable = document.getElementById('summaryTable');
+const summaryProgressContainer = document.getElementById('summaryProgressContainer');
+const summaryProgressBar = document.getElementById('summaryProgressBar');
 const shuttleSvg = document.getElementById('shuttleSvg');
 const fuselageEl = document.getElementById('part-fuselage');
 const noseEl = document.getElementById('part-nose');
@@ -273,7 +275,12 @@ function showSummary(summary) {
     table.appendChild(tr);
   });
   summaryTable.appendChild(table);
-  animateResults(summary);
+  // reset and show progress bar when summary is visible
+  if (summaryProgressContainer && summaryProgressBar) {
+    summaryProgressContainer.classList.remove('hidden');
+    summaryProgressBar.classList.remove('summary-progress-anim');
+    summaryProgressBar.style.width = '0%';
+  }
 }
 
 function computeOutcomeLabel(team) {
@@ -351,6 +358,7 @@ function playOutcomeAnimation(summary) {
     // fail at takeoff: quick explode near pad
     explosionEl.classList.remove('hidden');
     explosionEl.classList.add('explode');
+    startSummaryProgress(1500);
   } else if (badInsulation) {
     // survives launch, burns on re-entry
     shuttleSvg.classList.add('reentry-glow');
@@ -359,11 +367,24 @@ function playOutcomeAnimation(summary) {
       explosionEl.classList.remove('hidden');
       explosionEl.classList.add('explode');
     }, 2500);
+    startSummaryProgress(2500 + 700);
   } else {
     // successful: gentle glow that fades
     shuttleSvg.classList.add('reentry-glow');
     setTimeout(() => shuttleSvg.classList.remove('reentry-glow'), 3000);
+    startSummaryProgress(3000);
   }
+}
+
+function startSummaryProgress(totalMs) {
+  if (!summaryProgressContainer || !summaryProgressBar) return;
+  summaryProgressContainer.classList.remove('hidden');
+  summaryProgressBar.classList.remove('summary-progress-anim');
+  // force reflow so animation can restart
+  void summaryProgressBar.offsetWidth;
+  const seconds = Math.max(0.5, (totalMs || 3000) / 1000);
+  summaryProgressBar.style.animationDuration = `${seconds}s`;
+  summaryProgressBar.classList.add('summary-progress-anim');
 }
 
 // initialize
