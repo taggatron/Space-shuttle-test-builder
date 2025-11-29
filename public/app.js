@@ -22,20 +22,34 @@ const BUDGET = 100000;
 
 let mySelections = {};
 let myTeamName = null;
+let myRoom = null;
+let isHost = false;
 
 const partsTableBody = document.querySelector('#partsTable tbody');
 const totalMassEl = document.getElementById('totalMass');
 const totalCostEl = document.getElementById('totalCost');
 const budgetVal = document.getElementById('budgetVal');
 const timerEl = document.getElementById('timer');
-const joinBtn = document.getElementById('joinBtn');
-const startBtn = document.getElementById('startBtn');
+const createRoomBtn = document.getElementById('createRoomBtn');
+const joinRoomBtn = document.getElementById('joinRoomBtn');
+const roomNameInput = document.getElementById('roomNameInput');
 const teamNameInput = document.getElementById('teamName');
-const teamsList = document.getElementById('teamsList');
+const roomsListEl = document.getElementById('roomsList');
+const currentRoomEl = document.getElementById('currentRoom');
+const playersInRoomEl = document.getElementById('playersInRoom');
+const readyBtn = document.getElementById('readyBtn');
+const startBtn = document.getElementById('startBtn');
+const leaveRoomBtn = document.getElementById('leaveRoomBtn');
 const summarySection = document.getElementById('summary');
 const summaryTable = document.getElementById('summaryTable');
-const shuttleCanvas = document.getElementById('shuttleCanvas');
-const ctx = shuttleCanvas.getContext('2d');
+const shuttleSvg = document.getElementById('shuttleSvg');
+const fuselageEl = document.getElementById('part-fuselage');
+const noseEl = document.getElementById('part-nose');
+const wingTipsEl = document.getElementById('part-wingtips');
+const insulationEl = document.getElementById('part-insulation');
+const engineEl = document.getElementById('part-engine');
+const launchFlameEl = document.getElementById('launchFlame');
+const explosionEl = document.getElementById('explosion');
 
 budgetVal.textContent = BUDGET;
 
@@ -92,37 +106,121 @@ function updateTotals() {
   });
   totalMassEl.textContent = totalMass;
   totalCostEl.textContent = totalCost;
-  // emit update to server
-  if (myTeamName) {
-    socket.emit('updateSelection', { selections: mySelections, totalCost, totalMass });
+  // emit update to server if in a room
+  if (myTeamName && myRoom) {
+    socket.emit('updateSelection', { roomName: myRoom, selections: mySelections, totalCost, totalMass });
+  }
+  updateShuttleColours();
+}
+
+function updateShuttleColours() {
+  // map materials to colours heuristically
+  const partMat = (name) => mySelections[name];
+  const bodyMat = partMat('Main plane body (fuselage)');
+  const noseMat = partMat('Nose tip and wing tips');
+  const insulationMat = partMat('Plane thermal insulation');
+  const engineMat = partMat('Jet engine');
+
+  if (bodyMat) fuselageEl.style.fill = materialColour(bodyMat);
+  if (noseMat) {
+    noseEl.style.fill = materialColour(noseMat);
+    wingTipsEl.style.fill = materialColour(noseMat);
+  }
+  if (insulationMat) {
+    insulationEl.style.stroke = insulationMat.insulationRating >= 1 ? '#ffd27f' : '#555';
+  }
+  if (engineMat) engineEl.style.fill = materialColour(engineMat);
+}
+
+function materialColour(mat) {
+  switch (mat.name) {
+    case 'Titanium oxide': return '#cfd4e6';
+    case 'Silicon dioxide (glass)': return '#91c4ff';
+    case 'Reinforced Graphite (carbon fibre)': return '#444b57';
+    case 'Tungsten': return '#b1b4c2';
+    case 'Borosilicate tiles': return '#ffe0a3';
+    case 'Aluminium': return '#d8e4ff';
+    default: return '#e6eefc';
   }
 }
 
-joinBtn.addEventListener('click', () => {
-  myTeamName = (teamNameInput.value || ('Team-' + Math.random().toString(36).slice(2,6)));
-  socket.emit('join', { teamName: myTeamName, selections: mySelections });
-  joinBtn.disabled = true;
-  teamNameInput.disabled = true;
+createRoomBtn.addEventListener('click', () => {
+  const room = roomNameInput.value && roomNameInput.value.trim();
+  myTeamName = teamNameInput.value || ('Team-' + Math.random().toString(36).slice(2,6));
+  if (!room) return alert('Enter a room name');
+  socket.emit('createRoom', { roomName: room, teamName: myTeamName });
+});
+
+joinRoomBtn.addEventListener('click', () => {
+  const room = roomNameInput.value && roomNameInput.value.trim();
+  myTeamName = teamNameInput.value || ('Team-' + Math.random().toString(36).slice(2,6));
+  if (!room) return alert('Enter a room name');
+  socket.emit('joinRoom', { roomName: room, teamName: myTeamName });
+});
+
+readyBtn.addEventListener('click', () => {
+  if (!myRoom) return;
+  socket.emit('toggleReady', { roomName: myRoom });
 });
 
 startBtn.addEventListener('click', () => {
-  socket.emit('startGame');
+  if (!myRoom) return;
+  socket.emit('startGame', { roomName: myRoom });
 });
 
-socket.on('teamsUpdate', (teams) => {
-  teamsList.textContent = 'Teams: ' + teams.map(t => t.teamName).join(', ');
-  // enable start if we are host? Server will enable start by telling clients when they are host
-  // simple approach: if myTeamName is first in list, enable start on client
+leaveRoomBtn.addEventListener('click', () => {
+  if (!myRoom) return;
+  socket.emit('leaveRoom', { roomName: myRoom });
+  // local cleanup
+  myRoom = null;
+  currentRoomEl.textContent = '(none)';
+  readyBtn.classList.add('hidden');
+  startBtn.classList.add('hidden');
+  leaveRoomBtn.classList.add('hidden');
+  playersInRoomEl.innerHTML = '';
 });
 
-socket.on('teamPartialUpdate', (payload) => {
-  // could display small updates
+socket.on('roomsList', (rooms) => {
+  roomsListEl.textContent = rooms.join(', ');
+});
+
+socket.on('joinedRoom', ({ roomName, players, hostSocket }) => {
+  myRoom = roomName;
+  currentRoomEl.textContent = roomName;
+  // show lobby controls
+  readyBtn.classList.remove('hidden');
+  leaveRoomBtn.classList.remove('hidden');
+  // determine host
+  isHost = (hostSocket === socket.id);
+  if (isHost) startBtn.classList.remove('hidden'); else startBtn.classList.add('hidden');
+  // render players
+  playersInRoomEl.innerHTML = '';
+  players.forEach(p => {
+    const div = document.createElement('div');
+    div.textContent = `${p.teamName} ${p.ready ? '✓' : ''}`;
+    playersInRoomEl.appendChild(div);
+  });
+});
+
+socket.on('roomPlayersUpdate', ({ players, hostSocket }) => {
+  // players: [{ socketId, teamName, ready }]
+  playersInRoomEl.innerHTML = '';
+  players.forEach(p => {
+    const div = document.createElement('div');
+    div.textContent = `${p.teamName} ${p.ready ? '✓' : ''}`;
+    playersInRoomEl.appendChild(div);
+  });
+  // update host status for UI
+  isHost = (hostSocket === socket.id);
+  if (isHost) startBtn.classList.remove('hidden'); else startBtn.classList.add('hidden');
 });
 
 socket.on('gameStarted', ({ gameStartTime, gameEndTime, durationMs }) => {
-  // compute offset to sync timer
   startLocalTimer(gameEndTime);
-  startBtn.disabled = true;
+  // hide lobby ready/start controls while running
+  readyBtn.classList.add('hidden');
+  startBtn.classList.add('hidden');
+   playLaunchSequence();
 });
 
 let timerInterval = null;
@@ -142,8 +240,22 @@ function startLocalTimer(gameEndTime) {
 }
 
 socket.on('gameOver', ({ summary }) => {
-  // show summary screen to all users
   showSummary(summary);
+  playOutcomeAnimation(summary);
+});
+
+socket.on('summaryUpdate', (summary) => {
+  // can show intermediate summaries
+  console.log('summaryUpdate', summary);
+});
+
+socket.on('connect', () => {
+  // ask server for rooms list periodically
+  setTimeout(() => socket.emit('requestRooms'), 200);
+});
+
+socket.on('teamPartialUpdate', (payload) => {
+  // optional UI hook for showing team's partial totals
 });
 
 function showSummary(summary) {
@@ -161,7 +273,6 @@ function showSummary(summary) {
     table.appendChild(tr);
   });
   summaryTable.appendChild(table);
-  // animate each team's shuttle sequentially
   animateResults(summary);
 }
 
@@ -178,13 +289,11 @@ function computeOutcomeLabel(team) {
 }
 
 function animateResults(summary) {
-  // simple canvas draw + CSS-based animation
   let idx = 0;
   const next = () => {
     if (idx >= summary.length) return;
     const team = summary[idx++];
     drawShuttle();
-    // create floating element to animate
     const el = document.createElement('div');
     el.textContent = team.teamName;
     el.style.padding = '8px 12px';
@@ -193,19 +302,15 @@ function animateResults(summary) {
     el.style.borderRadius = '6px';
     document.getElementById('resultArea').innerHTML = '';
     document.getElementById('resultArea').appendChild(el);
-    // determine animation
     if (team.totalMass > 50000) {
-      // fail on takeoff
       el.classList.add('launch-fail');
     } else if ((team.selections['Plane thermal insulation']||{}).insulationRating < 1) {
-      // launch but burn on reentry
       el.classList.add('launch-success');
       setTimeout(() => {
         el.classList.remove('launch-success');
         el.classList.add('burn');
       }, 1800);
     } else {
-      // full success
       el.classList.add('launch-success');
     }
     setTimeout(next, 3000);
@@ -213,30 +318,55 @@ function animateResults(summary) {
   next();
 }
 
-function drawShuttle() {
-  ctx.clearRect(0,0,shuttleCanvas.width, shuttleCanvas.height);
-  // draw a simple shuttle silhouette
-  ctx.fillStyle = '#e6eefc';
-  ctx.beginPath();
-  ctx.moveTo(50,220);
-  ctx.quadraticCurveTo(180,40,420,220);
-  ctx.lineTo(350,220);
-  ctx.lineTo(330,260);
-  ctx.lineTo(270,260);
-  ctx.lineTo(250,220);
-  ctx.closePath();
-  ctx.fill();
-  // window
-  ctx.fillStyle = '#00172b';
-  ctx.fillRect(230,170,40,20);
+function playLaunchSequence() {
+  if (!shuttleSvg) return;
+  shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence');
+  launchFlameEl.classList.remove('hidden');
+  shuttleSvg.classList.add('launch-sequence');
+  // after launch, drift in space
+  setTimeout(() => {
+    shuttleSvg.classList.remove('launch-sequence');
+    shuttleSvg.classList.add('space-drift');
+    launchFlameEl.classList.add('hidden');
+  }, 3200);
+}
+
+function playOutcomeAnimation(summary) {
+  if (!summary || !summary.length) return;
+  // show our team's outcome if possible, else first team
+  const mine = summary.find(t => t.teamName === myTeamName) || summary[0];
+  const parts = mine.selections || {};
+  const mass = mine.totalMass || 0;
+  const insulation = parts['Plane thermal insulation'] || null;
+  const insulationRating = insulation ? insulation.insulationRating : 0;
+
+  shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence');
+  launchFlameEl.classList.add('hidden');
+  explosionEl.classList.add('hidden');
+
+  const tooHeavy = mass > 50000;
+  const badInsulation = insulationRating < 1;
+
+  if (tooHeavy) {
+    // fail at takeoff: quick explode near pad
+    explosionEl.classList.remove('hidden');
+    explosionEl.classList.add('explode');
+  } else if (badInsulation) {
+    // survives launch, burns on re-entry
+    shuttleSvg.classList.add('reentry-glow');
+    setTimeout(() => {
+      shuttleSvg.classList.remove('reentry-glow');
+      explosionEl.classList.remove('hidden');
+      explosionEl.classList.add('explode');
+    }, 2500);
+  } else {
+    // successful: gentle glow that fades
+    shuttleSvg.classList.add('reentry-glow');
+    setTimeout(() => shuttleSvg.classList.remove('reentry-glow'), 3000);
+  }
 }
 
 // initialize
 createSelectors();
-drawShuttle();
 
-// mark first connected as host (simple heuristic): enable start on first connection
-socket.on('connect', () => {
-  // small delay then ask server for teams list
-  setTimeout(() => socket.emit('join', { teamName: teamNameInput.value || null, selections: mySelections }), 200);
-});
+// (roomPlayersUpdate handler defined earlier with hostSocket payload)

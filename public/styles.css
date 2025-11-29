@@ -7,6 +7,9 @@ input#teamName { padding:6px; border-radius:4px; border: none }
 button { padding:6px 10px; border-radius:4px; border: none; background:#2b7cff; color:white }
 main { padding: 16px; display:flex; flex-direction:column; gap:12px }
 #statusBar { display:flex; gap:24px; align-items:center }
+#roomsList { color:#bfe0ff }
+#lobby { margin-left:12px; display:flex; gap:8px; align-items:center }
+#playersInRoom { color:#dfefff }
 #gameArea { display:flex; gap:20px }
 #selectors { width:480px; background: rgba(255,255,255,0.03); padding:12px; border-radius:6px }
 table { width:100%; border-collapse:collapse }
@@ -14,13 +17,28 @@ th, td { padding:8px; border-bottom:1px solid rgba(255,255,255,0.06); text-align
 select { width:100%; padding:4px }
 #totals { margin-top:8px }
 #visual { flex:1; display:flex; flex-direction:column; align-items:center }
-canvas { background: linear-gradient(#00172b,#021a33); border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.6) }
+#shuttleSvg { background: radial-gradient(circle at 20% 0%,#123867,#021327); border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.6); width:100%; max-width:600px }
+.shuttle-part { fill:url(#bodyGradient); stroke:#09162b; stroke-width:2 }
+.shuttle-window { fill:#00172b }
+.engine { fill:#9ea8b8 }
+.nose, .wingtips { fill:#dfe9ff }
+.insulation { fill:none; stroke:#ffd27f; stroke-width:6; stroke-linecap:round }
+#launchFlame { fill:orange; opacity:0.9 }
+.explosion circle { fill:#ffcc33 }
 #resultArea { margin-top:12px }
 .hidden { display:none }
 
 .launch-success { animation: launch 3s ease-in forwards }
 .launch-fail { animation: failLaunch 2s ease-in forwards }
 .burn { animation: burnAnim 2.5s ease-in forwards }
+
+.reentry-glow .fuselage, .reentry-glow .nose, .reentry-glow .wingtips {
+  animation: reentryGlow 1.2s ease-in-out infinite alternate;
+}
+
+.launch-sequence { animation: launchPath 3s ease-in forwards; }
+.space-drift { animation: spaceDrift 6s linear infinite alternate; }
+.explode { animation: explode 0.7s ease-out forwards; }
 
 @keyframes launch {
   0% { transform: translateY(60px) scale(1); opacity:1 }
@@ -35,6 +53,27 @@ canvas { background: linear-gradient(#00172b,#021a33); border-radius:8px; box-sh
   0% { filter: none }
   50% { filter: hue-rotate(20deg) brightness(1.6) }
   100% { opacity:0; transform: scale(1.3) }
+}
+
+@keyframes reentryGlow {
+  0% { filter: drop-shadow(0 0 0px rgba(255,80,0,0.0)); }
+  100% { filter: drop-shadow(0 0 18px rgba(255,80,0,0.9)); }
+}
+
+@keyframes launchPath {
+  0% { transform: translateY(60px) scale(1); }
+  60% { transform: translate(-40px,-160px) scale(0.95); }
+  100% { transform: translate(-80px,-230px) scale(0.9); }
+}
+
+@keyframes spaceDrift {
+  0% { transform: translate(-80px,-230px) scale(0.9) rotate(0deg); }
+  100% { transform: translate(-60px,-250px) scale(0.9) rotate(-4deg); }
+}
+
+@keyframes explode {
+  0% { opacity:1; transform: scale(1); }
+  100% { opacity:0; transform: scale(2); }
 }
 
 #summaryTable { background: rgba(255,255,255,0.03); padding:12px; border-radius:6px }
