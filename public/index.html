@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Space Shuttle Materials Game</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>Space Shuttle: Choose Materials</h1>
+        <div id="controls">
+          <input id="teamName" placeholder="Team name" />
+          <button id="joinBtn">Join</button>
+          <button id="startBtn" disabled>Start Game (Host)</button>
+        </div>
+      </header>
+
+      <main>
+        <section id="statusBar">
+          <div>Budget: £<span id="budgetVal">100000</span></div>
+          <div>T-minus: <span id="timer">--:--</span></div>
+          <div id="teamsList"></div>
+        </section>
+
+        <section id="gameArea">
+          <div id="selectors">
+            <h2>Choose materials for each part</h2>
+            <table id="partsTable">
+              <thead>
+                <tr><th>Part</th><th>Area (m²)</th><th>Volume (m³)</th><th>Material</th><th>Mass (kg)</th><th>Cost (£)</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+            <div id="totals">Total mass: <span id="totalMass">0</span> kg • Total cost: £<span id="totalCost">0</span></div>
+          </div>
+
+          <div id="visual">
+            <canvas id="shuttleCanvas" width="600" height="300"></canvas>
+            <div id="resultArea"></div>
+          </div>
+        </section>
+
+        <section id="summary" class="hidden">
+          <h2>Game Summary</h2>
+          <div id="summaryTable"></div>
+        </section>
+      </main>
+
+      <footer>
+        <small>Multiplayer demo. Built from provided materials data.</small>
+      </footer>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+  </body>
+  </html>
