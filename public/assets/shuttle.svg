@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Shuttle SVG exported for editing; IDs correspond to game parts -->
+<svg id="shuttleSvg" viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bodyGradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f5f7fb" />
+      <stop offset="100%" stop-color="#d1d9e8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Shadow on pad -->
+  <ellipse cx="260" cy="230" rx="180" ry="28" fill="rgba(0,0,0,0.4)" />
+
+  <!-- Main fuselage (part-fuselage) -->
+  <path id="part-fuselage" class="shuttle-part fuselage" d="M120 110 Q 260 40 390 110 Q 420 150 420 190 Q 420 230 390 270 Q 260 300 120 270 Q 90 230 90 190 Q 90 150 120 110 Z" fill="url(#bodyGradient)" stroke="#09162b" stroke-width="2"/>
+
+  <!-- Nose cone (part-nose) -->
+  <path id="part-nose" class="shuttle-part nose" d="M390 110 Q 470 150 480 190 Q 470 230 390 270 Q 380 230 380 190 Q 380 150 390 110 Z" fill="#d1d9e8" stroke="#09162b" stroke-width="2"/>
+
+  <!-- Delta wings + wing tips (part-wingtips) -->
+  <path id="wing-left" class="shuttle-part wingtips" d="M150 150 L70 220 L130 235 L170 255 L210 260 L210 230 L185 210 Z" fill="#dfe9ff" stroke="#09162b" stroke-width="2"/>
+  <path id="part-wingtips" class="shuttle-part wingtips" d="M260 150 L340 210 L315 230 L315 260 L275 255 L235 235 L215 215 Z" fill="#dfe9ff" stroke="#09162b" stroke-width="2"/>
+
+  <!-- Insulation / tile band (part-insulation) -->
+  <path id="part-insulation" class="shuttle-part insulation" d="M135 135 Q 260 85 385 135" fill="none" stroke="#ffd27f" stroke-width="6" stroke-linecap="round" />
+
+  <!-- Engine block (part-engine) -->
+  <rect id="part-engine" class="shuttle-part engine" x="95" y="175" width="50" height="40" rx="6" fill="#9ea8b8" stroke="#09162b" stroke-width="1" />
+  <!-- Engine nozzles -->
+  <circle cx="105" cy="195" r="7" fill="#555b6b" />
+  <circle cx="120" cy="205" r="8" fill="#555b6b" />
+  <circle cx="135" cy="195" r="7" fill="#555b6b" />
+
+  <!-- Cockpit windows -->
+  <rect x="325" y="150" width="46" height="18" rx="6" class="shuttle-window" fill="#00172b" />
+  <rect x="335" y="172" width="30" height="14" rx="4" class="shuttle-window" fill="#0b1b2b" />
+
+  <!-- Vertical tail fin tied to fuselage colour -->
+  <path id="tail-fin" class="shuttle-part fuselage" d="M230 120 L250 70 L270 120 Z" fill="url(#bodyGradient)" stroke="#09162b" stroke-width="2" />
+
+  <!-- Flame for launch -->
+  <polygon id="launchFlame" class="launch-flame hidden" points="80,190 60,205 70,220" fill="orange" opacity="0.9" />
+
+  <!-- Explosion group -->
+  <g id="explosion" class="explosion hidden">
+    <circle cx="260" cy="190" r="12" fill="#ffcc33" />
+    <circle cx="285" cy="180" r="9" fill="#ff9a33" />
+    <circle cx="240" cy="180" r="8" fill="#ff6633" />
+  </g>
+</svg>

@@ -25,6 +25,16 @@ let myTeamName = null;
 let myRoom = null;
 let isHost = false;
 
+// SVG part elements will be set after loading external SVG
+let shuttleSvg = null;
+let fuselageEl = null;
+let noseEl = null;
+let wingTipsEl = null;
+let insulationEl = null;
+let engineEl = null;
+let launchFlameEl = null;
+let explosionEl = null;
+
 const partsTableBody = document.querySelector('#partsTable tbody');
 const totalMassEl = document.getElementById('totalMass');
 const totalCostEl = document.getElementById('totalCost');
@@ -45,14 +55,6 @@ const summaryTable = document.getElementById('summaryTable');
 const summaryProgressContainer = document.getElementById('summaryProgressContainer');
 const summaryProgressBar = document.getElementById('summaryProgressBar');
 const summaryStageEls = document.querySelectorAll('#summaryStages .summary-stage');
-const shuttleSvg = document.getElementById('shuttleSvg');
-const fuselageEl = document.getElementById('part-fuselage');
-const noseEl = document.getElementById('part-nose');
-const wingTipsEl = document.getElementById('part-wingtips');
-const insulationEl = document.getElementById('part-insulation');
-const engineEl = document.getElementById('part-engine');
-const launchFlameEl = document.getElementById('launchFlame');
-const explosionEl = document.getElementById('explosion');
 
 budgetVal.textContent = BUDGET;
 
@@ -81,6 +83,31 @@ function createSelectors() {
     select.selectedIndex = MATERIALS.length-1;
     onSelectChange({ target: select });
   });
+}
+
+// Load external SVG file and inject into the DOM, then bind elements
+async function loadShuttleSvg() {
+  try {
+    const res = await fetch('/assets/shuttle.svg');
+    if (!res.ok) throw new Error('Failed to load SVG');
+    const svgText = await res.text();
+    const container = document.getElementById('shuttleContainer');
+    container.innerHTML = svgText;
+    // now bind elements
+    shuttleSvg = container.querySelector('svg');
+    fuselageEl = container.querySelector('#part-fuselage');
+    noseEl = container.querySelector('#part-nose');
+    // prefer the element with id 'part-wingtips' for material mapping
+    wingTipsEl = container.querySelector('#part-wingtips') || container.querySelector('#wing-left');
+    insulationEl = container.querySelector('#part-insulation');
+    engineEl = container.querySelector('#part-engine');
+    launchFlameEl = container.querySelector('#launchFlame');
+    explosionEl = container.querySelector('#explosion');
+    // apply any current selections to recolour the SVG
+    updateShuttleColours();
+  } catch (err) {
+    console.error('Error loading shuttle SVG', err);
+  }
 }
 
 function onSelectChange(e) {
@@ -124,15 +151,15 @@ function updateShuttleColours() {
   const insulationMat = partMat('Plane thermal insulation');
   const engineMat = partMat('Jet engine');
 
-  if (bodyMat) fuselageEl.style.fill = materialColour(bodyMat);
+  if (bodyMat && fuselageEl) fuselageEl.style.fill = materialColour(bodyMat);
   if (noseMat) {
-    noseEl.style.fill = materialColour(noseMat);
-    wingTipsEl.style.fill = materialColour(noseMat);
+    if (noseEl) noseEl.style.fill = materialColour(noseMat);
+    if (wingTipsEl) wingTipsEl.style.fill = materialColour(noseMat);
   }
   if (insulationMat) {
-    insulationEl.style.stroke = insulationMat.insulationRating >= 1 ? '#ffd27f' : '#555';
+    if (insulationEl) insulationEl.style.stroke = insulationMat.insulationRating >= 1 ? '#ffd27f' : '#555';
   }
-  if (engineMat) engineEl.style.fill = materialColour(engineMat);
+  if (engineMat && engineEl) engineEl.style.fill = materialColour(engineMat);
 }
 
 function materialColour(mat) {
@@ -334,14 +361,17 @@ function playLaunchSequence() {
   if (!shuttleSvg) return;
   shuttleSvg.classList.remove('explode','reentry-glow');
   // Just show a brief engine flame without moving the shuttle
-  launchFlameEl.classList.remove('hidden');
-  setTimeout(() => {
-    launchFlameEl.classList.add('hidden');
-  }, 800);
+  if (launchFlameEl) {
+    launchFlameEl.classList.remove('hidden');
+    setTimeout(() => {
+      launchFlameEl.classList.add('hidden');
+    }, 800);
+  }
 }
 
 function playOutcomeAnimation(summary) {
   if (!summary || !summary.length) return;
+  if (!shuttleSvg) return;
   // show our team's outcome if possible, else first team
   const mine = summary.find(t => t.teamName === myTeamName) || summary[0];
   const parts = mine.selections || {};
@@ -350,24 +380,28 @@ function playOutcomeAnimation(summary) {
   const insulationRating = insulation ? insulation.insulationRating : 0;
 
   shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence');
-  launchFlameEl.classList.add('hidden');
-  explosionEl.classList.add('hidden');
+  if (launchFlameEl) launchFlameEl.classList.add('hidden');
+  if (explosionEl) explosionEl.classList.add('hidden');
 
   const tooHeavy = mass > 50000;
   const badInsulation = insulationRating < 1;
 
   if (tooHeavy) {
     // fail at takeoff: quick explode near pad
-    explosionEl.classList.remove('hidden');
-    explosionEl.classList.add('explode');
+    if (explosionEl) {
+      explosionEl.classList.remove('hidden');
+      explosionEl.classList.add('explode');
+    }
     startSummaryProgress(1500);
   } else if (badInsulation) {
     // survives launch, burns on re-entry
     shuttleSvg.classList.add('reentry-glow');
     setTimeout(() => {
       shuttleSvg.classList.remove('reentry-glow');
-      explosionEl.classList.remove('hidden');
-      explosionEl.classList.add('explode');
+      if (explosionEl) {
+        explosionEl.classList.remove('hidden');
+        explosionEl.classList.add('explode');
+      }
     }, 2500);
     startSummaryProgress(2500 + 700);
   } else {
@@ -401,5 +435,6 @@ function startSummaryProgress(totalMs) {
 
 // initialize
 createSelectors();
+loadShuttleSvg();
 
 // (roomPlayersUpdate handler defined earlier with hostSocket payload)
