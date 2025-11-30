@@ -1,50 +1,456 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Shuttle SVG exported for editing; IDs correspond to game parts -->
-<svg id="shuttleSvg" viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bodyGradient" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#f5f7fb" />
-      <stop offset="100%" stop-color="#d1d9e8" />
+
+<svg
+   id="shuttleSvg"
+   viewBox="0 0 600 320"
+   version="1.1"
+   sodipodi:docname="shuttle.svg"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.1110041"
+     inkscape:cx="291.62808"
+     inkscape:cy="127.36226"
+     inkscape:window-width="1408"
+     inkscape:window-height="860"
+     inkscape:window-x="0"
+     inkscape:window-y="34"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="shuttleSvg" />
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect12"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect11"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect10"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect8"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <linearGradient
+       id="bodyGradient"
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="0">
+      <stop
+         offset="0%"
+         stop-color="#f5f7fb"
+         id="stop1" />
+      <stop
+         offset="100%"
+         stop-color="#d1d9e8"
+         id="stop2" />
     </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#bodyGradient"
+       id="linearGradient7"
+       x1="262.29468"
+       y1="59.05114"
+       x2="303.52055"
+       y2="60.201584"
+       gradientTransform="matrix(0.60774276,0,0,1.1085209,-69.429567,3.7084717)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#bodyGradient"
+       id="linearGradient8"
+       x1="60.179717"
+       y1="143.42695"
+       x2="332.79578"
+       y2="143.42695"
+       gradientTransform="matrix(1.4789036,0,0,0.67617659,55.703841,-17.791338)"
+       gradientUnits="userSpaceOnUse" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect10-3"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect10-3-0"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect10-5"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect10-3-0-7"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect10-5-3"
+       is_visible="true"
+       lpeversion="1.3"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false"
+       uniform="false" />
   </defs>
-
   <!-- Shadow on pad -->
-  <ellipse cx="260" cy="230" rx="180" ry="28" fill="rgba(0,0,0,0.4)" />
-
   <!-- Main fuselage (part-fuselage) -->
-  <path id="part-fuselage" class="shuttle-part fuselage" d="M120 110 Q 260 40 390 110 Q 420 150 420 190 Q 420 230 390 270 Q 260 300 120 270 Q 90 230 90 190 Q 90 150 120 110 Z" fill="url(#bodyGradient)" stroke="#09162b" stroke-width="2"/>
-
+  <path
+     id="tail-fin"
+     class="shuttle-part fuselage"
+     d="M 79.810984,109.65072 35.927426,9.1511822 61.192835,10.070128 167.2602,100.63353 Z"
+     fill="url(#bodyGradient)"
+     stroke="#09162b"
+     stroke-width="1.64158"
+     style="fill:url(#linearGradient7)"
+     sodipodi:nodetypes="ccccc" />
+  <path
+     id="part-fuselage"
+     class="shuttle-part fuselage"
+     d="m 175.70384,92.208662 c 94.6697,-0.242724 247.26189,-8.027446 270,0 10.49577,4.887529 17.18165,15.226988 38.01622,27.193988 20.83457,11.96701 55.81783,25.56156 58.61436,32.67301 5.59305,14.2229 4.17793,31.71231 4.53477,45.04087 0.33042,12.34206 -9.78122,18.26504 -55.53661,29.91824 -42.10507,10.72352 -117.4689,-0.0203 -127.4689,13.313 -86.66667,20 -94.82651,31.86089 -188.15984,11.86089 -5,-6.66667 -8.37434,-20.68062 -19.98765,-24.45137 -74.167583,-24.08156 -72.027664,-21.31696 -72.687104,-27.50054 -2.619136,-44.35554 1.24311,-37.46225 -3.82454,-49.48321 -4.183841,-9.92448 16.675612,-6.28964 16.675612,-12.95631 0,-6.66666 -28.063617,6.84087 -21.36502,0.2854 6.698597,-6.55548 -2.727407,-22.90283 7.037389,-29.42124 9.764796,-6.5184 27.799333,1.16057 36.997933,-5.3949 9.19859,-6.555472 52.15338,-4.411161 57.15338,-11.077828 z"
+     fill="url(#bodyGradient)"
+     stroke="#09162b"
+     stroke-width="2"
+     sodipodi:nodetypes="ccssssccscsssssc"
+     style="fill:url(#linearGradient8)" />
   <!-- Nose cone (part-nose) -->
-  <path id="part-nose" class="shuttle-part nose" d="M390 110 Q 470 150 480 190 Q 470 230 390 270 Q 380 230 380 190 Q 380 150 390 110 Z" fill="#d1d9e8" stroke="#09162b" stroke-width="2"/>
-
+  <path
+     id="part-nose"
+     class="shuttle-part nose"
+     d="m 514.48732,134.70147 c 36.67195,15.57668 48.32118,30.11806 59.00864,43.40594 -4.58399,15.57668 -42.49302,43.49698 -61.8839,43.55597 -4.58399,-15.57668 -6.87598,-27.97929 -6.87598,-43.55597 0,-15.57668 5.16725,-27.82926 9.75124,-43.40594 z"
+     fill="#d1d9e8"
+     stroke="#09162b"
+     stroke-width="1.26751"
+     sodipodi:nodetypes="cccsc" />
   <!-- Delta wings + wing tips (part-wingtips) -->
-  <path id="wing-left" class="shuttle-part wingtips" d="M150 150 L70 220 L130 235 L170 255 L210 260 L210 230 L185 210 Z" fill="#dfe9ff" stroke="#09162b" stroke-width="2"/>
-  <path id="part-wingtips" class="shuttle-part wingtips" d="M260 150 L340 210 L315 230 L315 260 L275 255 L235 235 L215 215 Z" fill="#dfe9ff" stroke="#09162b" stroke-width="2"/>
-
+  <path
+     id="wing-left"
+     class="shuttle-part wingtips"
+     d="m 118.4172,232.12145 -29.460813,78.35763 66.082383,0.313 99.99707,-36.49316 99.99705,-24.33203 135.9811,-22.72913 c -129.84832,1.71052 -242.74331,3.51931 -372.59679,4.88369 z"
+     fill="#dfe9ff"
+     stroke="#09162b"
+     stroke-width="3.75719"
+     sodipodi:nodetypes="ccccccc" />
+  <path
+     id="part-wingtips"
+     class="shuttle-part wingtips"
+     d="m 92.42482,311.24815 66.96132,1.06191 190.39473,-60.39008 c 51.36757,-8.82525 91.50319,-15.80386 141.77342,-24.64987 -52.03224,4.22726 -94.29495,11.14575 -146.35826,15.06662 l -99.49623,28.17579 -88.26682,29.6784 -59.500391,-2.20547 z"
+     fill="#dfe9ff"
+     stroke="#09162b"
+     stroke-width="2.13733"
+     sodipodi:nodetypes="ccccccccc" />
   <!-- Insulation / tile band (part-insulation) -->
-  <path id="part-insulation" class="shuttle-part insulation" d="M135 135 Q 260 85 385 135" fill="none" stroke="#ffd27f" stroke-width="6" stroke-linecap="round" />
-
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
+     d="M 48.572373,11.235008 C 62.033317,42.781121 75.494262,74.327236 88.955207,105.87335"
+     id="path8"
+     inkscape:path-effect="#path-effect8"
+     inkscape:original-d="M 48.572373,11.235008 C 62.033317,42.781121 88.955207,105.87335 88.955207,105.87335"
+     sodipodi:nodetypes="cc" />
+  <path
+     id="part-insulation"
+     class="shuttle-part insulation"
+     d="m 162.57226,94.17195 c 76.92539,-5.820141 163.12015,-5.688029 275.49703,-4.254717"
+     fill="none"
+     stroke="#ffd27f"
+     stroke-width="5.96624"
+     stroke-linecap="round"
+     sodipodi:nodetypes="cc" />
   <!-- Engine block (part-engine) -->
-  <rect id="part-engine" class="shuttle-part engine" x="95" y="175" width="50" height="40" rx="6" fill="#9ea8b8" stroke="#09162b" stroke-width="1" />
   <!-- Engine nozzles -->
-  <circle cx="105" cy="195" r="7" fill="#555b6b" />
-  <circle cx="120" cy="205" r="8" fill="#555b6b" />
-  <circle cx="135" cy="195" r="7" fill="#555b6b" />
-
   <!-- Cockpit windows -->
-  <rect x="325" y="150" width="46" height="18" rx="6" class="shuttle-window" fill="#00172b" />
-  <rect x="335" y="172" width="30" height="14" rx="4" class="shuttle-window" fill="#0b1b2b" />
-
+  <rect
+     x="414.71088"
+     y="185.00911"
+     width="46"
+     height="18"
+     rx="6"
+     class="shuttle-window"
+     fill="#00172b"
+     id="rect4" />
+  <rect
+     x="375.40292"
+     y="186.91336"
+     width="30"
+     height="14"
+     rx="4"
+     class="shuttle-window"
+     fill="#0b1b2b"
+     id="rect5" />
   <!-- Vertical tail fin tied to fuselage colour -->
-  <path id="tail-fin" class="shuttle-part fuselage" d="M230 120 L250 70 L270 120 Z" fill="url(#bodyGradient)" stroke="#09162b" stroke-width="2" />
-
   <!-- Flame for launch -->
-  <polygon id="launchFlame" class="launch-flame hidden" points="80,190 60,205 70,220" fill="orange" opacity="0.9" />
-
+  <polygon
+     id="launchFlame"
+     class="launch-flame hidden"
+     points="60,205 70,220 80,190 "
+     fill="#ffa500"
+     opacity="0.9"
+     transform="matrix(-2.351376,-1.5929126,1.5300913,-1.6069987,-98.673587,571.97435)" />
+  <polygon
+     id="launchFlame-8"
+     class="launch-flame hidden"
+     points="60,205 70,220 80,190 "
+     fill="#ffa500"
+     opacity="0.9"
+     transform="matrix(-2.3037114,-1.5729186,1.5767878,-1.4615458,-111.43524,583.48542)" />
   <!-- Explosion group -->
-  <g id="explosion" class="explosion hidden">
-    <circle cx="260" cy="190" r="12" fill="#ffcc33" />
-    <circle cx="285" cy="180" r="9" fill="#ff9a33" />
-    <circle cx="240" cy="180" r="8" fill="#ff6633" />
+  <g
+     id="explosion"
+     class="explosion hidden"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <circle
+       cx="260"
+       cy="190"
+       r="12"
+       fill="#ffcc33"
+       id="circle5" />
+    <circle
+       cx="285"
+       cy="180"
+       r="9"
+       fill="#ff9a33"
+       id="circle6" />
+    <circle
+       cx="240"
+       cy="180"
+       r="8"
+       fill="#ff6633"
+       id="circle7" />
   </g>
+  <rect
+     id="part-engine"
+     class="shuttle-part engine"
+     x="74.326515"
+     y="105.83379"
+     width="65.565857"
+     height="40.000008"
+     rx="6"
+     fill="#9ea8b8"
+     stroke="#09162b"
+     stroke-width="1" />
+  <rect
+     id="part-engine-8"
+     class="shuttle-part engine"
+     x="74.402611"
+     y="148.37334"
+     width="79.673103"
+     height="43.973625"
+     rx="8.5091667"
+     fill="#9ea8b8"
+     stroke="#09162b"
+     stroke-width="1.18767"
+     ry="0" />
+  <circle
+     cx="79.203873"
+     cy="140.6044"
+     r="7"
+     fill="#555b6b"
+     id="circle2" />
+  <circle
+     cx="78.390251"
+     cy="126.35667"
+     r="8"
+     fill="#555b6b"
+     id="circle3" />
+  <circle
+     cx="78.510071"
+     cy="112.25686"
+     r="7"
+     fill="#555b6b"
+     id="circle4" />
+  <circle
+     cx="78.827995"
+     cy="184.55779"
+     r="7"
+     fill="#555b6b"
+     id="circle2-0" />
+  <circle
+     cx="78.014374"
+     cy="170.31006"
+     r="8"
+     fill="#555b6b"
+     id="circle3-2" />
+  <circle
+     cx="78.134193"
+     cy="161.61076"
+     r="7"
+     fill="#555b6b"
+     id="circle4-4" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:0.235852;stroke-linecap:round"
+     id="path9"
+     sodipodi:type="arc"
+     sodipodi:cx="422.44431"
+     sodipodi:cy="96.736931"
+     sodipodi:rx="5.249476"
+     sodipodi:ry="5.477705"
+     sodipodi:start="2.8547152"
+     sodipodi:end="2.8512932"
+     sodipodi:arc-type="slice"
+     d="m 417.40936,98.286895 a 5.249476,5.477705 0 0 1 3.54525,-6.802479 5.249476,5.477705 0 0 1 6.52209,3.693564 5.249476,5.477705 0 0 1 -3.53409,6.8088 5.249476,5.477705 0 0 1 -6.52813,-3.681915 l 5.02983,-1.567934 z" />
+  <path
+     style="opacity:0.7;fill:#666666;fill-opacity:0.743455;stroke:#000000;stroke-width:1.121;stroke-linecap:round;stroke-dasharray:none"
+     d="m 185.69731,135.05822 c 0,0 3.10231,12.10247 3.10231,12.10247 0,0 216.00104,-4.31628 216.00104,-4.31628 0,0 -2.76736,-10.15904 -2.76736,-10.15904 z"
+     id="path12"
+     inkscape:path-effect="#path-effect12"
+     inkscape:original-d="m 185.69731,135.05822 3.10231,12.10247 216.00104,-4.31628 -2.76736,-10.15904 z"
+     sodipodi:nodetypes="ccccc"
+     transform="matrix(1.0296872,0,0,1.2253034,-14.395028,-20.92207)" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
+     d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
+     id="path10"
+     inkscape:path-effect="#path-effect10"
+     inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
+     sodipodi:nodetypes="ccc"
+     transform="matrix(1.0823629,0,0,1.5260074,149.50389,-47.602372)" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
+     d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
+     id="path10-9"
+     inkscape:path-effect="#path-effect10-3"
+     inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
+     sodipodi:nodetypes="ccc"
+     transform="matrix(1.0823629,0,0,1.5260074,104.41902,-47.602372)" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
+     d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
+     id="path10-2"
+     inkscape:path-effect="#path-effect10-5"
+     inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
+     sodipodi:nodetypes="ccc"
+     transform="matrix(1.0823629,0,0,1.5260074,63.567162,-47.602372)" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
+     d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
+     id="path10-9-2"
+     inkscape:path-effect="#path-effect10-3-0"
+     inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
+     sodipodi:nodetypes="ccc"
+     transform="matrix(1.0823629,0,0,1.5260074,18.482287,-47.602372)" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
+     d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
+     id="path10-2-7"
+     inkscape:path-effect="#path-effect10-5-3"
+     inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
+     sodipodi:nodetypes="ccc"
+     transform="matrix(1.0823629,0,0,1.5260074,-28.725122,-47.602372)" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
+     d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
+     id="path10-9-2-9"
+     inkscape:path-effect="#path-effect10-3-0-7"
+     inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
+     sodipodi:nodetypes="ccc"
+     transform="matrix(1.0823629,0,0,1.5260074,-73.809998,-44.550358)" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
+     d="m 209.62795,133.01693 c 69.0341,-0.56125 138.06821,-1.12251 207.10231,-1.68376"
+     id="path11"
+     inkscape:path-effect="#path-effect11"
+     inkscape:original-d="m 209.62795,133.01693 c 69.0341,-0.56125 138.06821,-1.1225 207.10231,-1.68376"
+     transform="matrix(1.0755073,0,0,2.8011491,-46.707363,-213.15162)" />
+  <rect
+     style="opacity:0.7;fill:#87ffff;fill-opacity:0.743455;stroke:#000000;stroke-width:0.927706;stroke-linecap:round;stroke-dasharray:none"
+     id="rect11"
+     width="19.577963"
+     height="24.115299"
+     x="295.30756"
+     y="440.34888"
+     ry="6.2693071"
+     transform="matrix(0.59224348,-0.80575906,0.57444516,0.81854307,0,0)" />
+  <rect
+     style="opacity:0.7;fill:#87ffff;fill-opacity:0.743455;stroke:#000000;stroke-width:0.660464;stroke-linecap:round;stroke-dasharray:none"
+     id="rect11-0"
+     width="13.891566"
+     height="17.226065"
+     x="448.39407"
+     y="565.80695"
+     ry="4.4782977"
+     transform="matrix(0.45034903,-0.89285259,0.4338982,0.9009619,0,0)" />
 </svg>
