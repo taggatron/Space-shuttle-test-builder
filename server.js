@@ -6,7 +6,8 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
 
-const PORT = process.env.PORT || 3000;
+const BASE_PORT = parseInt(process.env.PORT, 10) || 3000;
+let currentPort = BASE_PORT;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -162,6 +163,19 @@ function endRoomGame(roomName) {
   io.to(roomName).emit('gameOver', { summary });
 }
 
-server.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+function startServer(port) {
+  server.listen(port, () => {
+    currentPort = port;
+    console.log(`Server running on http://localhost:${port}`);
+  }).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      const nextPort = port + 1;
+      console.log(`Port ${port} in use, trying ${nextPort}...`);
+      startServer(nextPort);
+    } else {
+      console.error('Server failed to start:', err);
+    }
+  });
+}
+
+startServer(BASE_PORT);

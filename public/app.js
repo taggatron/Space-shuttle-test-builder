@@ -332,15 +332,12 @@ function animateResults(summary) {
 
 function playLaunchSequence() {
   if (!shuttleSvg) return;
-  shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence');
+  shuttleSvg.classList.remove('explode','reentry-glow');
+  // Just show a brief engine flame without moving the shuttle
   launchFlameEl.classList.remove('hidden');
-  shuttleSvg.classList.add('launch-sequence');
-  // after launch, drift in space
   setTimeout(() => {
-    shuttleSvg.classList.remove('launch-sequence');
-    shuttleSvg.classList.add('space-drift');
     launchFlameEl.classList.add('hidden');
-  }, 3200);
+  }, 800);
 }
 
 function playOutcomeAnimation(summary) {

@@ -17,7 +17,7 @@ th, td { padding:8px; border-bottom:1px solid rgba(255,255,255,0.06); text-align
 select { width:100%; padding:4px }
 #totals { margin-top:8px }
 #visual { flex:1; display:flex; flex-direction:column; align-items:center }
-#shuttleSvg { background: radial-gradient(circle at 20% 0%,#123867,#021327); border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.6); width:100%; max-width:600px; transform-origin: 50% 75%; }
+#shuttleSvg { background: radial-gradient(circle at 20% 0%,#123867,#021327); border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.6); width:100%; max-width:600px; }
 .shuttle-part { fill:url(#bodyGradient); stroke:#09162b; stroke-width:2 }
 .shuttle-window { fill:#00172b }
 .engine { fill:#9ea8b8 }
@@ -35,9 +35,8 @@ select { width:100%; padding:4px }
 .reentry-glow .fuselage, .reentry-glow .nose, .reentry-glow .wingtips {
   animation: reentryGlow 1.2s ease-in-out infinite alternate;
 }
-
-.launch-sequence { animation: launchPath 3s ease-in forwards; }
-.space-drift { animation: spaceDrift 6s linear infinite alternate; }
+.launch-sequence { /* animation removed to keep shuttle fixed */ }
+.space-drift { /* animation removed to keep shuttle fixed */ }
 .explode { animation: explode 0.7s ease-out forwards; }
 
 @keyframes launch {
@@ -60,17 +59,7 @@ select { width:100%; padding:4px }
   100% { filter: drop-shadow(0 0 18px rgba(255,80,0,0.9)); }
 }
 
-@keyframes launchPath {
-  0%   { transform: translateY(0) scale(1); }
-  20%  { transform: translateY(-10px) scale(1); }
-  60%  { transform: translate(-20px,-120px) scale(0.97); }
-  100% { transform: translate(-60px,-210px) scale(0.9); }
-}
-
-@keyframes spaceDrift {
-  0% { transform: translate(-60px,-210px) scale(0.9) rotate(0deg); }
-  100% { transform: translate(-40px,-230px) scale(0.9) rotate(-4deg); }
-}
+/* launchPath and spaceDrift no longer used for SVG movement */
 
 @keyframes explode {
   0% { opacity:1; transform: scale(1); }
