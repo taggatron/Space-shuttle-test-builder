@@ -44,6 +44,7 @@ const summarySection = document.getElementById('summary');
 const summaryTable = document.getElementById('summaryTable');
 const summaryProgressContainer = document.getElementById('summaryProgressContainer');
 const summaryProgressBar = document.getElementById('summaryProgressBar');
+const summaryStageEls = document.querySelectorAll('#summaryStages .summary-stage');
 const shuttleSvg = document.getElementById('shuttleSvg');
 const fuselageEl = document.getElementById('part-fuselage');
 const noseEl = document.getElementById('part-nose');
@@ -281,6 +282,10 @@ function showSummary(summary) {
     summaryProgressBar.classList.remove('summary-progress-anim');
     summaryProgressBar.style.width = '0%';
   }
+  // reset stage highlights
+  if (summaryStageEls) {
+    summaryStageEls.forEach(el => el.classList.remove('summary-stage-active'));
+  }
 }
 
 function computeOutcomeLabel(team) {
@@ -385,6 +390,16 @@ function startSummaryProgress(totalMs) {
   const seconds = Math.max(0.5, (totalMs || 3000) / 1000);
   summaryProgressBar.style.animationDuration = `${seconds}s`;
   summaryProgressBar.classList.add('summary-progress-anim');
+  // schedule stage highlights: Takeoff ~25%, Space ~60%, Re-entry ~100%
+  if (summaryStageEls && summaryStageEls.length) {
+    summaryStageEls.forEach(el => el.classList.remove('summary-stage-active'));
+    const takeoff = Array.from(summaryStageEls).find(el => el.dataset.stage === 'takeoff');
+    const space = Array.from(summaryStageEls).find(el => el.dataset.stage === 'space');
+    const reentry = Array.from(summaryStageEls).find(el => el.dataset.stage === 'reentry');
+    if (takeoff) setTimeout(() => takeoff.classList.add('summary-stage-active'), seconds * 0.25 * 1000);
+    if (space) setTimeout(() => space.classList.add('summary-stage-active'), seconds * 0.6 * 1000);
+    if (reentry) setTimeout(() => reentry.classList.add('summary-stage-active'), seconds * 0.99 * 1000);
+  }
 }
 
 // initialize

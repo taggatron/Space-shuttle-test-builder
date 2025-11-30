@@ -79,7 +79,10 @@ select { width:100%; padding:4px }
 
 #summaryTable { background: rgba(255,255,255,0.03); padding:12px; border-radius:6px }
 
-#summaryProgressContainer { margin-top:12px; background: rgba(255,255,255,0.04); border-radius:999px; overflow:hidden; height:10px; }
+#summaryStages { display:flex; gap:16px; margin-bottom:8px; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.4); }
+.summary-stage-active { color:#ffffff; }
+
+#summaryProgressContainer { margin-top:4px; background: rgba(255,255,255,0.04); border-radius:999px; overflow:hidden; height:10px; }
 #summaryProgressBar { width:0%; height:100%; background: linear-gradient(90deg,#2bff88,#2b7cff); transition: width 0.2s linear; }
 .summary-progress-anim { animation: summaryProgress 3s linear forwards; }
 
