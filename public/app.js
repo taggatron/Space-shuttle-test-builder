@@ -484,33 +484,13 @@ function playOutcomeAnimation(summary) {
   shuttleState = 'space';
 
   if (tooHeavy) {
-    // fail at takeoff: quick explode near pad
-    if (explosionEl) {
-      explosionEl.classList.remove('hidden');
-      explosionEl.style.display = 'inline';
-      explosionEl.style.opacity = '1';
-      explosionEl.classList.add('explode');
-      // ensure explosion ends invisible and animation class is cleared
-      setTimeout(() => {
-        explosionEl.classList.remove('explode');
-        explosionEl.style.opacity = '0';
-      }, 1000);
-    }
-    // add fragment effect on main parts (staggered slightly)
-    if (fuselageEl) fuselageEl.classList.add('fragment-body');
-    if (noseEl) setTimeout(() => noseEl.classList.add('fragment-nose'), 80);
-    if (wingTipsEl) setTimeout(() => wingTipsEl.classList.add('fragment-wings'), 140);
-    // apply random fragment effect to all other visible pieces
-    addRandomFragments();
-    startSummaryProgress(1500);
-  } else if (badInsulation) {
-    // survives launch, rotates for re-entry, then burns on re-entry
-    shuttleSvg.classList.remove('shuttle-rotate-space');
-    shuttleSvg.classList.add('shuttle-rotate-reentry');
-    shuttleState = 'reentry';
-    shuttleSvg.classList.add('reentry-glow');
+    // takeoff failure: show brief upright ascent, then tip down and explode near pad
     setTimeout(() => {
-      shuttleSvg.classList.remove('reentry-glow');
+      if (shuttleSvg) {
+        shuttleSvg.classList.remove('shuttle-rotate-space');
+        shuttleSvg.classList.add('shuttle-rotate-reentry');
+        shuttleState = 'reentry';
+      }
       if (explosionEl) {
         explosionEl.classList.remove('hidden');
         explosionEl.style.display = 'inline';
@@ -522,17 +502,54 @@ function playOutcomeAnimation(summary) {
           explosionEl.style.opacity = '0';
         }, 1000);
       }
+      // add fragment effect on main parts (staggered slightly)
       if (fuselageEl) fuselageEl.classList.add('fragment-body');
       if (noseEl) setTimeout(() => noseEl.classList.add('fragment-nose'), 80);
       if (wingTipsEl) setTimeout(() => wingTipsEl.classList.add('fragment-wings'), 140);
+      // apply random fragment effect to all other visible pieces
       addRandomFragments();
-    }, 2500);
-    startSummaryProgress(2500 + 700);
+    }, 4500);
+    startSummaryProgress(4500);
+  } else if (badInsulation) {
+    // survives launch, stays upright in space, then tips down for re-entry and burns
+    setTimeout(() => {
+      if (shuttleSvg) {
+        shuttleSvg.classList.remove('shuttle-rotate-space');
+        shuttleSvg.classList.add('shuttle-rotate-reentry');
+        shuttleState = 'reentry';
+        shuttleSvg.classList.add('reentry-glow');
+      }
+      setTimeout(() => {
+        if (shuttleSvg) shuttleSvg.classList.remove('reentry-glow');
+        if (explosionEl) {
+          explosionEl.classList.remove('hidden');
+          explosionEl.style.display = 'inline';
+          explosionEl.style.opacity = '1';
+          explosionEl.classList.add('explode');
+          // ensure explosion ends invisible and animation class is cleared
+          setTimeout(() => {
+            explosionEl.classList.remove('explode');
+            explosionEl.style.opacity = '0';
+          }, 1000);
+        }
+        if (fuselageEl) fuselageEl.classList.add('fragment-body');
+        if (noseEl) setTimeout(() => noseEl.classList.add('fragment-nose'), 80);
+        if (wingTipsEl) setTimeout(() => wingTipsEl.classList.add('fragment-wings'), 140);
+        addRandomFragments();
+      }, 4500); // re-entry glow duration
+    }, 4500);   // upright-in-space duration
+    // keep overall summary timeline aligned with longer re-entry sequence
+    startSummaryProgress(4500 + 4500);
   } else {
-    // successful: gentle glow that fades
-    shuttleSvg.classList.add('reentry-glow');
-    setTimeout(() => shuttleSvg.classList.remove('reentry-glow'), 3000);
-    startSummaryProgress(3000);
+    // successful: stay upright in space, then gentle re-entry glow
+    setTimeout(() => {
+      if (shuttleSvg) shuttleSvg.classList.add('reentry-glow');
+      setTimeout(() => {
+        if (shuttleSvg) shuttleSvg.classList.remove('reentry-glow');
+      }, 6000);
+    }, 4500); // time spent upright in space before re-entry
+    // slow successful mission timeline by about 3x
+    startSummaryProgress(4500 + 6000);
   }
 }
 
@@ -556,7 +573,7 @@ function startSummaryProgress(totalMs) {
   // force reflow so animation can restart
   void summaryProgressBar.offsetWidth;
   // slow overall animation so stages are clearer
-  const seconds = Math.max(1.5, (totalMs || 6000) / 1000);
+  const seconds = Math.max(1.5, (totalMs || 18000) / 1000);
   summaryProgressBar.style.animationDuration = `${seconds}s`;
   summaryProgressBar.classList.add('summary-progress-anim');
   // schedule stage highlights: Takeoff ~25%, Space ~60%, Re-entry ~100%
