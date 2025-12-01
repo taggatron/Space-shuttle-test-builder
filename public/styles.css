@@ -72,13 +72,13 @@ select { width:100%; padding:4px }
 }
 
 .shuttle-rotate-space {
-  transform: rotate(0deg);
+  transform: rotate(-80deg);
   transform-origin: 50% 60%;
   transition: transform 0.9s ease-in-out;
 }
 
 .shuttle-rotate-reentry {
-  transform: rotate(90deg);
+  transform: rotate(80deg); /* near-vertical down, slightly tilted */
   transform-origin: 50% 60%;
   transition: transform 0.9s ease-in-out;
 }

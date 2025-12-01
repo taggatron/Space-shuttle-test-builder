@@ -272,7 +272,7 @@ socket.on('gameStarted', ({ gameStartTime, gameEndTime, durationMs }) => {
   startBtn.classList.add('hidden');
   // ensure shuttle is visible and all effects reset at game start
   if (shuttleSvg) {
-    shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence','shuttle-rotate-launch','shuttle-rotate-space','shuttle-rotate-reentry');
+    shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence','shuttle-rotate-launch','shuttle-rotate-space','shuttle-rotate-reentry','shuttle-launch-flash');
   }
   if (launchFlameEl) launchFlameEl.classList.add('hidden');
   if (launchFlameAltMainEl) launchFlameAltMainEl.classList.add('hidden');
@@ -303,10 +303,12 @@ function startLocalTimer(gameEndTime) {
     timerEl.textContent = `${mm}:${ss}`;
     if (remaining <= 0) {
       clearInterval(timerInterval);
-      // rotate shuttle to launch attitude and fire bright flames at liftoff
+      // snap shuttle to upright launch attitude with a quick flash, then fire bright flames
       if (shuttleSvg) {
-        shuttleSvg.classList.remove('shuttle-rotate-space','shuttle-rotate-reentry');
-        shuttleSvg.classList.add('shuttle-rotate-launch');
+        shuttleSvg.classList.remove('shuttle-rotate-space','shuttle-rotate-reentry','shuttle-launch-flash');
+        // force reflow so flash animation can restart
+        void shuttleSvg.offsetWidth;
+        shuttleSvg.classList.add('shuttle-rotate-launch','shuttle-launch-flash');
       }
       shuttleState = 'launch';
       playLaunchSequence(true);
@@ -476,6 +478,7 @@ function playOutcomeAnimation(summary) {
   // move from launch attitude into space orientation before resolving outcome
   if (shuttleSvg) {
     shuttleSvg.classList.remove('shuttle-rotate-launch','shuttle-rotate-reentry');
+    // remain essentially upright in space (smoothly, but small delta from launch)
     shuttleSvg.classList.add('shuttle-rotate-space');
   }
   shuttleState = 'space';
