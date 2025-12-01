@@ -268,7 +268,26 @@ socket.on('gameStarted', ({ gameStartTime, gameEndTime, durationMs }) => {
   // hide lobby ready/start controls while running
   readyBtn.classList.add('hidden');
   startBtn.classList.add('hidden');
-   playLaunchSequence();
+  // ensure shuttle is visible and all effects reset at game start
+  if (shuttleSvg) {
+    shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence');
+  }
+  if (launchFlameEl) launchFlameEl.classList.add('hidden');
+  if (launchFlameAltMainEl) launchFlameAltMainEl.classList.add('hidden');
+  if (launchFlameAlt1El) launchFlameAlt1El.classList.add('hidden');
+  if (launchFlameAlt2El) launchFlameAlt2El.classList.add('hidden');
+  if (explosionEl) {
+    explosionEl.classList.add('hidden');
+    explosionEl.style.opacity = '0';
+  }
+  if (fuselageEl) fuselageEl.classList.remove('fragment-body');
+  if (noseEl) noseEl.classList.remove('fragment-nose');
+  if (wingTipsEl) wingTipsEl.classList.remove('fragment-wings');
+  if (shuttleSvg) {
+    shuttleSvg.querySelectorAll('.fragment-random').forEach(el => el.classList.remove('fragment-random'));
+  }
+  // optional: brief flame pulse at start of game
+  playLaunchSequence();
 });
 
 let timerInterval = null;
