@@ -41,6 +41,7 @@ select { width:100%; padding:4px }
 .fragment-body { animation: fragmentBody 0.9s ease-out forwards; transform-origin:center; }
 .fragment-nose { animation: fragmentNose 0.9s ease-out forwards; transform-origin:center; }
 .fragment-wings { animation: fragmentWings 0.9s ease-out forwards; transform-origin:center; }
+.fragment-random { animation: fragmentRandom 0.9s ease-out forwards; transform-origin:center; }
 
 @keyframes launch {
   0% { transform: translateY(60px) scale(1); opacity:1 }
@@ -82,6 +83,11 @@ select { width:100%; padding:4px }
 @keyframes fragmentWings {
   0% { opacity:1; transform: translate(0,0) scale(1) rotate(0deg); }
   100% { opacity:0; transform: translate(-60px,10px) scale(0.8) rotate(-25deg); }
+}
+
+@keyframes fragmentRandom {
+  0% { opacity:1; transform: translate(0,0) scale(1) rotate(0deg); }
+  100% { opacity:0; transform: translate(30px,-30px) scale(0.8) rotate(18deg); }
 }
 
 #summaryTable { background: rgba(255,255,255,0.03); padding:12px; border-radius:6px }

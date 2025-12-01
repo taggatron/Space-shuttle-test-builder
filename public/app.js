@@ -419,6 +419,12 @@ function playOutcomeAnimation(summary) {
   if (fuselageEl) fuselageEl.classList.remove('fragment-body');
   if (noseEl) noseEl.classList.remove('fragment-nose');
   if (wingTipsEl) wingTipsEl.classList.remove('fragment-wings');
+  // clear any previous random fragments on other pieces
+  if (shuttleSvg) {
+    shuttleSvg.querySelectorAll('.fragment-random').forEach(el => {
+      el.classList.remove('fragment-random');
+    });
+  }
 
   const tooHeavy = mass > 50000;
   const badInsulation = insulationRating < 1;
@@ -433,6 +439,8 @@ function playOutcomeAnimation(summary) {
     if (fuselageEl) fuselageEl.classList.add('fragment-body');
     if (noseEl) setTimeout(() => noseEl.classList.add('fragment-nose'), 80);
     if (wingTipsEl) setTimeout(() => wingTipsEl.classList.add('fragment-wings'), 140);
+    // apply random fragment effect to all other visible pieces
+    addRandomFragments();
     startSummaryProgress(1500);
   } else if (badInsulation) {
     // survives launch, burns on re-entry
@@ -446,6 +454,7 @@ function playOutcomeAnimation(summary) {
       if (fuselageEl) fuselageEl.classList.add('fragment-body');
       if (noseEl) setTimeout(() => noseEl.classList.add('fragment-nose'), 80);
       if (wingTipsEl) setTimeout(() => wingTipsEl.classList.add('fragment-wings'), 140);
+      addRandomFragments();
     }, 2500);
     startSummaryProgress(2500 + 700);
   } else {
@@ -454,6 +463,19 @@ function playOutcomeAnimation(summary) {
     setTimeout(() => shuttleSvg.classList.remove('reentry-glow'), 3000);
     startSummaryProgress(3000);
   }
+}
+
+function addRandomFragments() {
+  if (!shuttleSvg) return;
+  const exclude = new Set();
+  if (fuselageEl) exclude.add(fuselageEl);
+  if (noseEl) exclude.add(noseEl);
+  if (wingTipsEl) exclude.add(wingTipsEl);
+  // apply to all shuttle-part children that aren't main body/nose/wings
+  shuttleSvg.querySelectorAll('.shuttle-part').forEach(el => {
+    if (exclude.has(el)) return;
+    el.classList.add('fragment-random');
+  });
 }
 
 function startSummaryProgress(totalMs) {
