@@ -32,7 +32,10 @@ let noseEl = null;
 let wingTipsEl = null;
 let insulationEl = null;
 let engineEl = null;
+let engineEl2 = null;
 let launchFlameEl = null;
+let launchFlameAlt1El = null;
+let launchFlameAlt2El = null;
 let explosionEl = null;
 
 const partsTableBody = document.querySelector('#partsTable tbody');
@@ -101,7 +104,12 @@ async function loadShuttleSvg() {
     wingTipsEl = container.querySelector('#part-wingtips') || container.querySelector('#wing-left');
     insulationEl = container.querySelector('#part-insulation');
     engineEl = container.querySelector('#part-engine');
+    // also colour secondary engine block if present
+    engineEl2 = container.querySelector('#part-engine-8');
+    // main center flame plus extra lobes
     launchFlameEl = container.querySelector('#launchFlame');
+    launchFlameAlt1El = container.querySelector('#launchFlame-8');
+    launchFlameAlt2El = container.querySelector('#launchFlame-8-0');
     explosionEl = container.querySelector('#explosion');
     // apply any current selections to recolour the SVG
     updateShuttleColours();
@@ -159,7 +167,10 @@ function updateShuttleColours() {
   if (insulationMat) {
     if (insulationEl) insulationEl.style.stroke = insulationMat.insulationRating >= 1 ? '#ffd27f' : '#555';
   }
-  if (engineMat && engineEl) engineEl.style.fill = materialColour(engineMat);
+  if (engineMat) {
+    if (engineEl) engineEl.style.fill = materialColour(engineMat);
+    if (engineEl2) engineEl2.style.fill = materialColour(engineMat);
+  }
 }
 
 function materialColour(mat) {
@@ -361,12 +372,18 @@ function playLaunchSequence() {
   if (!shuttleSvg) return;
   shuttleSvg.classList.remove('explode','reentry-glow');
   // Just show a brief engine flame without moving the shuttle
-  if (launchFlameEl) {
-    launchFlameEl.classList.remove('hidden');
+  const showFlame = (el, delay = 0) => {
+    if (!el) return;
     setTimeout(() => {
-      launchFlameEl.classList.add('hidden');
-    }, 800);
-  }
+      el.classList.remove('hidden');
+      setTimeout(() => {
+        el.classList.add('hidden');
+      }, 800);
+    }, delay);
+  };
+  showFlame(launchFlameEl, 0);
+  showFlame(launchFlameAlt1El, 60);
+  showFlame(launchFlameAlt2El, 120);
 }
 
 function playOutcomeAnimation(summary) {
@@ -381,10 +398,12 @@ function playOutcomeAnimation(summary) {
 
   shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence');
   if (launchFlameEl) launchFlameEl.classList.add('hidden');
+    if (launchFlameAlt1El) launchFlameAlt1El.classList.add('hidden');
+    if (launchFlameAlt2El) launchFlameAlt2El.classList.add('hidden');
   if (explosionEl) explosionEl.classList.add('hidden');
-  if (fuselageEl) fuselageEl.classList.remove('fragment');
-  if (noseEl) noseEl.classList.remove('fragment');
-  if (wingTipsEl) wingTipsEl.classList.remove('fragment');
+  if (fuselageEl) fuselageEl.classList.remove('fragment-body');
+  if (noseEl) noseEl.classList.remove('fragment-nose');
+  if (wingTipsEl) wingTipsEl.classList.remove('fragment-wings');
 
   const tooHeavy = mass > 50000;
   const badInsulation = insulationRating < 1;
@@ -395,10 +414,10 @@ function playOutcomeAnimation(summary) {
       explosionEl.classList.remove('hidden');
       explosionEl.classList.add('explode');
     }
-    // add fragment effect on main parts
-    if (fuselageEl) fuselageEl.classList.add('fragment');
-    if (noseEl) noseEl.classList.add('fragment');
-    if (wingTipsEl) wingTipsEl.classList.add('fragment');
+    // add fragment effect on main parts (staggered slightly)
+    if (fuselageEl) fuselageEl.classList.add('fragment-body');
+    if (noseEl) setTimeout(() => noseEl.classList.add('fragment-nose'), 80);
+    if (wingTipsEl) setTimeout(() => wingTipsEl.classList.add('fragment-wings'), 140);
     startSummaryProgress(1500);
   } else if (badInsulation) {
     // survives launch, burns on re-entry
@@ -409,9 +428,9 @@ function playOutcomeAnimation(summary) {
         explosionEl.classList.remove('hidden');
         explosionEl.classList.add('explode');
       }
-      if (fuselageEl) fuselageEl.classList.add('fragment');
-      if (noseEl) noseEl.classList.add('fragment');
-      if (wingTipsEl) wingTipsEl.classList.add('fragment');
+      if (fuselageEl) fuselageEl.classList.add('fragment-body');
+      if (noseEl) setTimeout(() => noseEl.classList.add('fragment-nose'), 80);
+      if (wingTipsEl) setTimeout(() => wingTipsEl.classList.add('fragment-wings'), 140);
     }, 2500);
     startSummaryProgress(2500 + 700);
   } else {

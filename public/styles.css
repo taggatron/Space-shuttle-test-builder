@@ -38,7 +38,9 @@ select { width:100%; padding:4px }
 .launch-sequence { /* animation removed to keep shuttle fixed */ }
 .space-drift { /* animation removed to keep shuttle fixed */ }
 .explode { animation: explode 0.7s ease-out forwards; }
-.fragment { animation: fragmentBurst 0.9s ease-out forwards; transform-origin:center; }
+.fragment-body { animation: fragmentBody 0.9s ease-out forwards; transform-origin:center; }
+.fragment-nose { animation: fragmentNose 0.9s ease-out forwards; transform-origin:center; }
+.fragment-wings { animation: fragmentWings 0.9s ease-out forwards; transform-origin:center; }
 
 @keyframes launch {
   0% { transform: translateY(60px) scale(1); opacity:1 }
@@ -67,9 +69,19 @@ select { width:100%; padding:4px }
   100% { opacity:0; transform: scale(2); }
 }
 
-@keyframes fragmentBurst {
+@keyframes fragmentBody {
   0% { opacity:1; transform: translate(0,0) scale(1) rotate(0deg); }
-  100% { opacity:0; transform: translate(40px,-40px) scale(0.8) rotate(25deg); }
+  100% { opacity:0; transform: translate(0,-50px) scale(0.9) rotate(-10deg); }
+}
+
+@keyframes fragmentNose {
+  0% { opacity:1; transform: translate(0,0) scale(1) rotate(0deg); }
+  100% { opacity:0; transform: translate(50px,-30px) scale(0.8) rotate(20deg); }
+}
+
+@keyframes fragmentWings {
+  0% { opacity:1; transform: translate(0,0) scale(1) rotate(0deg); }
+  100% { opacity:0; transform: translate(-60px,10px) scale(0.8) rotate(-25deg); }
 }
 
 #summaryTable { background: rgba(255,255,255,0.03); padding:12px; border-radius:6px }

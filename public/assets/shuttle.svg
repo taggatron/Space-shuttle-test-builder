@@ -21,15 +21,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="2.9852456"
-     inkscape:cx="84.582654"
-     inkscape:cy="122.1005"
+     inkscape:zoom="1.6200435"
+     inkscape:cx="132.40385"
+     inkscape:cy="88.577869"
      inkscape:window-width="1296"
      inkscape:window-height="860"
      inkscape:window-x="221"
      inkscape:window-y="34"
      inkscape:window-maximized="0"
-     inkscape:current-layer="explosion" />
+     inkscape:current-layer="shuttleSvg" />
   <defs
      id="defs2">
     <inkscape:path-effect
@@ -233,22 +233,6 @@
      stroke-width="1.26751"
      sodipodi:nodetypes="cccsc" />
   <!-- Delta wings + wing tips (part-wingtips) -->
-  <path
-     id="wing-left"
-     class="shuttle-part wingtips"
-     d="m 118.4172,232.12145 -29.460813,78.35763 66.082383,0.313 99.99707,-36.49316 99.99705,-24.33203 135.9811,-22.72913 c -129.84832,1.71052 -242.74331,3.51931 -372.59679,4.88369 z"
-     fill="#dfe9ff"
-     stroke="#09162b"
-     stroke-width="3.75719"
-     sodipodi:nodetypes="ccccccc" />
-  <path
-     id="part-wingtips"
-     class="shuttle-part wingtips"
-     d="m 92.42482,311.24815 66.96132,1.06191 190.39473,-60.39008 c 51.36757,-8.82525 91.50319,-15.80386 141.77342,-24.64987 -52.03224,4.22726 -94.29495,11.14575 -146.35826,15.06662 l -99.49623,28.17579 -88.26682,29.6784 -59.500391,-2.20547 z"
-     fill="#dfe9ff"
-     stroke="#09162b"
-     stroke-width="2.13733"
-     sodipodi:nodetypes="ccccccccc" />
   <!-- Insulation / tile band (part-insulation) -->
   <path
      style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
@@ -290,6 +274,14 @@
   <!-- Vertical tail fin tied to fuselage colour -->
   <!-- Flame for launch -->
   <polygon
+     id="launchFlame-8-0-2"
+     class="launch-flame hidden"
+     points="80,190 60,205 70,220 "
+     fill="#ffa500"
+     opacity="0.9"
+     transform="matrix(-1.4589546,-1.2510625,0.9985894,-1.1624792,-43.903046,454.70804)"
+     style="fill:#ff8600;fill-opacity:1;opacity:0.79" />
+  <polygon
      id="launchFlame-8"
      class="launch-flame hidden"
      points="70,220 80,190 60,205 "
@@ -297,35 +289,43 @@
      opacity="0.9"
      transform="matrix(-2.3037114,-1.5729186,1.5767878,-1.4615458,-111.43524,552.54829)" />
   <polygon
-     id="launchFlame-8-0-2"
-     class="launch-flame hidden"
-     points="80,190 60,205 70,220 "
-     fill="#ffa500"
-     opacity="0.9"
-     transform="matrix(-1.4589546,-1.2510625,0.9985894,-1.1624792,-43.903046,454.70804)"
-     style="fill:#ff8600;fill-opacity:1" />
-  <polygon
      id="launchFlame-8-0"
      class="launch-flame hidden"
      points="70,220 80,190 60,205 "
      fill="#ffa500"
      opacity="0.9"
      transform="matrix(-1.4589546,-1.2510625,0.9985894,-1.1624792,-42.89302,468.39533)"
-     style="fill:#ff8600;fill-opacity:1" />
+     style="fill:#ff8600;fill-opacity:1;opacity:0.73" />
+  <path
+     id="part-fuselage"
+     class="shuttle-part fuselage"
+     d="m 175.70384,92.208662 c 94.6697,-0.242724 247.26189,-8.027446 270,0 10.49577,4.887529 17.18165,15.226988 38.01622,27.193988 20.83457,11.96701 55.81783,25.56156 58.61436,32.67301 5.59305,14.2229 4.17793,31.71231 4.53477,45.04087 0.33042,12.34206 -9.78122,18.26504 -55.53661,29.91824 -42.10507,10.72352 -117.4689,-0.0203 -127.4689,13.313 -86.66667,20 -94.82651,31.86089 -188.15984,11.86089 -5,-6.66667 -8.37434,-20.68062 -19.98765,-24.45137 -74.167583,-24.08156 -72.027664,-21.31696 -72.687104,-27.50054 -2.619136,-44.35554 1.24311,-37.46225 -3.82454,-49.48321 3.97496,-2.11712 -2.729835,-13.89081 -2.161621,-18.35843 1.958996,-15.40274 -10.253009,-24.4687 1.349868,-26.26151 12.987414,-2.00673 30.959067,3.68836 40.157667,-2.86711 9.19859,-6.555472 52.15338,-4.411161 57.15338,-11.077828 z"
+     fill="url(#bodyGradient)"
+     stroke="#09162b"
+     stroke-width="2"
+     sodipodi:nodetypes="ccssssccscssssc"
+     style="display:inline;fill:url(#linearGradient8)" />
+  <path
+     id="part-wingtips"
+     class="shuttle-part wingtips"
+     d="m 92.42482,311.24815 66.96132,1.06191 190.39473,-60.39008 c 51.36757,-8.82525 91.50319,-15.80386 141.77342,-24.64987 -52.03224,4.22726 -94.29495,11.14575 -146.35826,15.06662 l -99.49623,28.17579 -88.26682,29.6784 -59.500391,-2.20547 z"
+     fill="#dfe9ff"
+     stroke="#09162b"
+     stroke-width="2.13733"
+     sodipodi:nodetypes="ccccccccc" />
+  <path
+     id="wing-left"
+     class="shuttle-part wingtips"
+     d="m 118.4172,232.12145 -29.460813,78.35763 66.082383,0.313 99.99707,-36.49316 99.99705,-24.33203 135.9811,-22.72913 c -129.84832,1.71052 -242.74331,3.51931 -372.59679,4.88369 z"
+     fill="#dfe9ff"
+     stroke="#09162b"
+     stroke-width="3.75719"
+     sodipodi:nodetypes="ccccccc" />
   <!-- Explosion group -->
   <g
      id="explosion"
      class="explosion hidden"
      style="display:inline">
-    <path
-       id="part-fuselage"
-       class="shuttle-part fuselage"
-       d="m 175.70384,92.208662 c 94.6697,-0.242724 247.26189,-8.027446 270,0 10.49577,4.887529 17.18165,15.226988 38.01622,27.193988 20.83457,11.96701 55.81783,25.56156 58.61436,32.67301 5.59305,14.2229 4.17793,31.71231 4.53477,45.04087 0.33042,12.34206 -9.78122,18.26504 -55.53661,29.91824 -42.10507,10.72352 -117.4689,-0.0203 -127.4689,13.313 -86.66667,20 -94.82651,31.86089 -188.15984,11.86089 -5,-6.66667 -8.37434,-20.68062 -19.98765,-24.45137 -74.167583,-24.08156 -72.027664,-21.31696 -72.687104,-27.50054 -2.619136,-44.35554 1.24311,-37.46225 -3.82454,-49.48321 3.97496,-2.11712 -2.729835,-13.89081 -2.161621,-18.35843 1.958996,-15.40274 -10.253009,-24.4687 1.349868,-26.26151 12.987414,-2.00673 30.959067,3.68836 40.157667,-2.86711 9.19859,-6.555472 52.15338,-4.411161 57.15338,-11.077828 z"
-       fill="url(#bodyGradient)"
-       stroke="#09162b"
-       stroke-width="2"
-       sodipodi:nodetypes="ccssssccscssssc"
-       style="fill:url(#linearGradient8)" />
     <circle
        cx="260"
        cy="190"
