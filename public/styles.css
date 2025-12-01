@@ -82,6 +82,26 @@ select { width:100%; padding:4px }
   margin-top: 60px;
 }
 
+/* Launch pad shrink + fade as shuttle climbs */
+#launchPad.shrink-away {
+  animation: launchPadShrinkFade 3s ease-in forwards;
+}
+
+@keyframes launchPadShrinkFade {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(0.7);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
+
 /* Smooth overall shuttle rotation states */
 .shuttle-rotate-launch {
   transform: rotate(-90deg);

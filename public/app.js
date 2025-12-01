@@ -39,6 +39,7 @@ let launchFlameAlt1El = null;
 let launchFlameAlt2El = null;
 let explosionEl = null;
 let shuttleState = 'idle'; // 'idle' | 'launch' | 'space' | 'reentry'
+let gameRootEl = null; // for vertical shuttle positioning
 
 const partsTableBody = document.querySelector('#partsTable tbody');
 const totalMassEl = document.getElementById('totalMass');
@@ -62,6 +63,7 @@ const summaryProgressContainer = document.getElementById('summaryProgressContain
 const summaryProgressBar = document.getElementById('summaryProgressBar');
 const summaryStageEls = document.querySelectorAll('#summaryStages .summary-stage');
 const selectorsSection = document.getElementById('selectors');
+const launchPadEl = document.getElementById('launchPad');
 
 budgetVal.textContent = BUDGET;
 
@@ -99,6 +101,9 @@ async function loadShuttleSvg() {
     if (!res.ok) throw new Error('Failed to load SVG');
     const svgText = await res.text();
     const container = document.getElementById('shuttleContainer');
+    if (!gameRootEl) {
+      gameRootEl = document.querySelector('main') || document.body;
+    }
     container.innerHTML = svgText;
     // now bind elements
     shuttleSvg = container.querySelector('svg');
@@ -283,6 +288,14 @@ socket.on('gameStarted', ({ gameStartTime, gameEndTime, durationMs }) => {
     explosionEl.style.opacity = '0';
   }
   shuttleState = 'idle';
+  if (launchPadEl) {
+    launchPadEl.classList.remove('shrink-away');
+    launchPadEl.style.opacity = '';
+    launchPadEl.style.transform = '';
+  }
+  if (gameRootEl) {
+    gameRootEl.classList.remove('shuttle-y-launch','shuttle-y-space','shuttle-y-reentry');
+  }
   if (fuselageEl) fuselageEl.classList.remove('fragment-body');
   if (noseEl) noseEl.classList.remove('fragment-nose');
   if (wingTipsEl) wingTipsEl.classList.remove('fragment-wings');
@@ -310,8 +323,19 @@ function startLocalTimer(gameEndTime) {
         void shuttleSvg.offsetWidth;
         shuttleSvg.classList.add('shuttle-rotate-launch','shuttle-launch-flash');
       }
+      if (gameRootEl) {
+        gameRootEl.classList.remove('shuttle-y-space','shuttle-y-reentry');
+        gameRootEl.classList.add('shuttle-y-launch');
+      }
       shuttleState = 'launch';
       playLaunchSequence(true);
+      // start launch pad shrinking to simulate climbing away from pad
+      if (launchPadEl) {
+        launchPadEl.classList.remove('shrink-away');
+        // force reflow so animation restarts each game
+        void launchPadEl.offsetWidth;
+        launchPadEl.classList.add('shrink-away');
+      }
       // when countdown finishes, swap layout: bring summary up next to shuttle
       swapSummaryAndSelectors();
     }
@@ -491,6 +515,10 @@ function playOutcomeAnimation(summary) {
         shuttleSvg.classList.add('shuttle-rotate-reentry');
         shuttleState = 'reentry';
       }
+      if (gameRootEl) {
+        gameRootEl.classList.remove('shuttle-y-space');
+        gameRootEl.classList.add('shuttle-y-reentry');
+      }
       if (explosionEl) {
         explosionEl.classList.remove('hidden');
         explosionEl.style.display = 'inline';
@@ -518,6 +546,10 @@ function playOutcomeAnimation(summary) {
         shuttleSvg.classList.add('shuttle-rotate-reentry');
         shuttleState = 'reentry';
         shuttleSvg.classList.add('reentry-glow');
+      }
+      if (gameRootEl) {
+        gameRootEl.classList.remove('shuttle-y-space');
+        gameRootEl.classList.add('shuttle-y-reentry');
       }
       setTimeout(() => {
         if (shuttleSvg) shuttleSvg.classList.remove('reentry-glow');
