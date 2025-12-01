@@ -114,6 +114,10 @@ async function loadShuttleSvg() {
     launchFlameAlt1El = container.querySelector('#launchFlame-8');
     launchFlameAlt2El = container.querySelector('#launchFlame-8-0');
     explosionEl = container.querySelector('#explosion');
+    // ensure explosion starts fully invisible
+    if (explosionEl) {
+      explosionEl.style.opacity = '0';
+    }
     // apply any current selections to recolour the SVG
     updateShuttleColours();
   } catch (err) {
@@ -415,7 +419,10 @@ function playOutcomeAnimation(summary) {
   if (launchFlameAltMainEl) launchFlameAltMainEl.classList.add('hidden');
   if (launchFlameAlt1El) launchFlameAlt1El.classList.add('hidden');
   if (launchFlameAlt2El) launchFlameAlt2El.classList.add('hidden');
-  if (explosionEl) explosionEl.classList.add('hidden');
+  if (explosionEl) {
+    explosionEl.classList.add('hidden');
+    explosionEl.style.opacity = '0';
+  }
   if (fuselageEl) fuselageEl.classList.remove('fragment-body');
   if (noseEl) noseEl.classList.remove('fragment-nose');
   if (wingTipsEl) wingTipsEl.classList.remove('fragment-wings');
@@ -433,6 +440,7 @@ function playOutcomeAnimation(summary) {
     // fail at takeoff: quick explode near pad
     if (explosionEl) {
       explosionEl.classList.remove('hidden');
+      explosionEl.style.opacity = '1';
       explosionEl.classList.add('explode');
     }
     // add fragment effect on main parts (staggered slightly)
@@ -449,6 +457,7 @@ function playOutcomeAnimation(summary) {
       shuttleSvg.classList.remove('reentry-glow');
       if (explosionEl) {
         explosionEl.classList.remove('hidden');
+        explosionEl.style.opacity = '1';
         explosionEl.classList.add('explode');
       }
       if (fuselageEl) fuselageEl.classList.add('fragment-body');
