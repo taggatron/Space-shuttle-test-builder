@@ -464,6 +464,7 @@ function playOutcomeAnimation(summary) {
     // fail at takeoff: quick explode near pad
     if (explosionEl) {
       explosionEl.classList.remove('hidden');
+      explosionEl.style.display = 'inline';
       explosionEl.style.opacity = '1';
       explosionEl.classList.add('explode');
     }
@@ -481,6 +482,7 @@ function playOutcomeAnimation(summary) {
       shuttleSvg.classList.remove('reentry-glow');
       if (explosionEl) {
         explosionEl.classList.remove('hidden');
+        explosionEl.style.display = 'inline';
         explosionEl.style.opacity = '1';
         explosionEl.classList.add('explode');
       }

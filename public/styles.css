@@ -28,13 +28,13 @@ select { width:100%; padding:4px }
 
 /* Make the SVG explosion feel larger and more dramatic */
 .explosion.explode {
-  animation: bigExplode 1s ease-out forwards;
+  animation: bigExplode 0.9s ease-out 0s 2 alternate;
 }
 
 @keyframes bigExplode {
-  0% { opacity:1; transform: scale(1); filter: drop-shadow(0 0 0px rgba(255,200,80,0)); }
-  50% { opacity:1; transform: scale(2.4); filter: drop-shadow(0 0 16px rgba(255,200,80,0.9)); }
-  100% { opacity:0; transform: scale(3.2); filter: drop-shadow(0 0 26px rgba(255,120,40,0.4)); }
+  0% { opacity:0; transform: scale(0.3); filter: drop-shadow(0 0 0px rgba(255,200,80,0)); }
+  40% { opacity:1; transform: scale(1.8); filter: drop-shadow(0 0 18px rgba(255,220,120,0.9)); }
+  100% { opacity:0; transform: scale(2.4); filter: drop-shadow(0 0 26px rgba(255,120,40,0.4)); }
 }
 #resultArea { margin-top:12px }
 .hidden { display:none }
