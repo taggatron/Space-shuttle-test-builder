@@ -38,6 +38,7 @@ let launchFlameAltMainEl = null;
 let launchFlameAlt1El = null;
 let launchFlameAlt2El = null;
 let explosionEl = null;
+let shuttleState = 'idle'; // 'idle' | 'launch' | 'space' | 'reentry'
 
 const partsTableBody = document.querySelector('#partsTable tbody');
 const totalMassEl = document.getElementById('totalMass');
@@ -271,7 +272,7 @@ socket.on('gameStarted', ({ gameStartTime, gameEndTime, durationMs }) => {
   startBtn.classList.add('hidden');
   // ensure shuttle is visible and all effects reset at game start
   if (shuttleSvg) {
-    shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence');
+    shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence','shuttle-rotate-launch','shuttle-rotate-space','shuttle-rotate-reentry');
   }
   if (launchFlameEl) launchFlameEl.classList.add('hidden');
   if (launchFlameAltMainEl) launchFlameAltMainEl.classList.add('hidden');
@@ -281,6 +282,7 @@ socket.on('gameStarted', ({ gameStartTime, gameEndTime, durationMs }) => {
     explosionEl.classList.add('hidden');
     explosionEl.style.opacity = '0';
   }
+  shuttleState = 'idle';
   if (fuselageEl) fuselageEl.classList.remove('fragment-body');
   if (noseEl) noseEl.classList.remove('fragment-nose');
   if (wingTipsEl) wingTipsEl.classList.remove('fragment-wings');
@@ -301,8 +303,13 @@ function startLocalTimer(gameEndTime) {
     timerEl.textContent = `${mm}:${ss}`;
     if (remaining <= 0) {
       clearInterval(timerInterval);
-      // mimic launch flames at the exact moment of liftoff
-      playLaunchSequence();
+      // rotate shuttle to launch attitude and fire bright flames at liftoff
+      if (shuttleSvg) {
+        shuttleSvg.classList.remove('shuttle-rotate-space','shuttle-rotate-reentry');
+        shuttleSvg.classList.add('shuttle-rotate-launch');
+      }
+      shuttleState = 'launch';
+      playLaunchSequence(true);
       // when countdown finishes, swap layout: bring summary up next to shuttle
       swapSummaryAndSelectors();
     }
@@ -407,7 +414,7 @@ function animateResults(summary) {
   next();
 }
 
-function playLaunchSequence() {
+function playLaunchSequence(withGlow = false) {
   if (!shuttleSvg) return;
   shuttleSvg.classList.remove('explode','reentry-glow');
   // Just show a brief engine flame without moving the shuttle
@@ -415,8 +422,14 @@ function playLaunchSequence() {
     if (!el) return;
     setTimeout(() => {
       el.classList.remove('hidden');
+      if (withGlow) {
+        el.classList.add('flame-glow');
+      }
       setTimeout(() => {
         el.classList.add('hidden');
+        if (withGlow) {
+          el.classList.remove('flame-glow');
+        }
       }, visibleMs);
     }, delay);
   };
@@ -460,6 +473,13 @@ function playOutcomeAnimation(summary) {
   // track outcome type for summary colouring
   window.__lastOutcomeType = (tooHeavy || badInsulation) ? 'fail' : 'success';
 
+  // move from launch attitude into space orientation before resolving outcome
+  if (shuttleSvg) {
+    shuttleSvg.classList.remove('shuttle-rotate-launch','shuttle-rotate-reentry');
+    shuttleSvg.classList.add('shuttle-rotate-space');
+  }
+  shuttleState = 'space';
+
   if (tooHeavy) {
     // fail at takeoff: quick explode near pad
     if (explosionEl) {
@@ -481,7 +501,10 @@ function playOutcomeAnimation(summary) {
     addRandomFragments();
     startSummaryProgress(1500);
   } else if (badInsulation) {
-    // survives launch, burns on re-entry
+    // survives launch, rotates for re-entry, then burns on re-entry
+    shuttleSvg.classList.remove('shuttle-rotate-space');
+    shuttleSvg.classList.add('shuttle-rotate-reentry');
+    shuttleState = 'reentry';
     shuttleSvg.classList.add('reentry-glow');
     setTimeout(() => {
       shuttleSvg.classList.remove('reentry-glow');
