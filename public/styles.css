@@ -64,6 +64,24 @@ select { width:100%; padding:4px }
 #resultArea { margin-top:12px }
 .hidden { display:none }
 
+/* Keep shuttle clear of status bar by offsetting its container */
+#shuttleContainer {
+  margin-top: 40px;
+  transition: margin-top 0.9s ease-in-out;
+}
+
+.shuttle-y-launch #shuttleContainer {
+  margin-top: 70px;
+}
+
+.shuttle-y-space #shuttleContainer {
+  margin-top: 80px;
+}
+
+.shuttle-y-reentry #shuttleContainer {
+  margin-top: 60px;
+}
+
 /* Smooth overall shuttle rotation states */
 .shuttle-rotate-launch {
   transform: rotate(-90deg);
