@@ -21,9 +21,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="1.307218"
-     inkscape:cx="218.40274"
-     inkscape:cy="133.48959"
+     inkscape:zoom="2.5930441"
+     inkscape:cx="221.16863"
+     inkscape:cy="86.963427"
      inkscape:window-width="1296"
      inkscape:window-height="860"
      inkscape:window-x="221"
@@ -244,19 +244,22 @@
      cy="140.6044"
      r="7"
      fill="#555b6b"
-     id="circle2" />
+     id="circle2" 
+     class="shuttle-part" />
   <circle
      cx="78.390251"
      cy="126.35667"
      r="8"
      fill="#555b6b"
-     id="circle3" />
+     id="circle3" 
+     class="shuttle-part" />
   <circle
      cx="78.510071"
      cy="112.25686"
      r="7"
      fill="#555b6b"
-     id="circle4" />
+     id="circle4"
+     class="shuttle-part" />
   <!-- Nose cone (part-nose) -->
   <path
      id="part-nose"
@@ -272,6 +275,7 @@
      style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
      d="M 48.572373,11.235008 C 62.033317,42.781121 75.494262,74.327236 88.955207,105.87335"
      id="path8"
+     class="shuttle-part"
      inkscape:path-effect="#path-effect8"
      inkscape:original-d="M 48.572373,11.235008 C 62.033317,42.781121 88.955207,105.87335 88.955207,105.87335"
      sodipodi:nodetypes="cc" />
@@ -287,24 +291,6 @@
   <!-- Engine block (part-engine) -->
   <!-- Engine nozzles -->
   <!-- Cockpit windows -->
-  <rect
-     x="414.71088"
-     y="185.00911"
-     width="46"
-     height="18"
-     rx="6"
-     class="shuttle-window"
-     fill="#00172b"
-     id="rect4" />
-  <rect
-     x="375.40292"
-     y="186.91336"
-     width="30"
-     height="14"
-     rx="4"
-     class="shuttle-window"
-     fill="#0b1b2b"
-     id="rect5" />
   <!-- Vertical tail fin tied to fuselage colour -->
   <!-- Flame for launch -->
   <polygon
@@ -343,6 +329,24 @@
      stroke-width="2"
      sodipodi:nodetypes="ccssssccscssssc"
      style="display:inline;fill:url(#linearGradient8)" />
+  <rect
+     x="392.71088"
+     y="185.00911"
+     width="46"
+     height="18"
+     rx="6"
+     class="shuttle-part shuttle-window"
+     fill="#00172b"
+     id="rect4" />
+  <rect
+     x="353.40292"
+     y="186.91336"
+     width="30"
+     height="14"
+     rx="4"
+     class="shuttle-part shuttle-window"
+     fill="#0b1b2b"
+     id="rect5" />
   <path
      id="part-wingtips"
      class="shuttle-part wingtips"
@@ -363,7 +367,7 @@
   <g
      id="explosion"
      class="explosion hidden"
-     style="display:none">
+     style="display:none;opacity:0">
     <circle
        cx="260"
        cy="190"
@@ -400,22 +404,26 @@
      cy="153.62065"
      r="7"
      fill="#555b6b"
-     id="circle2-0" />
+     id="circle2-0"
+     class="shuttle-part" />
   <circle
      cx="78.014374"
      cy="139.37292"
      r="8"
      fill="#555b6b"
-     id="circle3-2" />
+     id="circle3-2"
+     class="shuttle-part" />
   <circle
      cx="78.134193"
      cy="130.67363"
      r="7"
      fill="#555b6b"
-     id="circle4-4" />
+     id="circle4-4" 
+     class="shuttle-part" />
   <path
      style="fill:#000000;stroke:#000000;stroke-width:0.235852;stroke-linecap:round"
      id="path9"
+     class="shuttle-part"
      sodipodi:type="arc"
      sodipodi:cx="422.44431"
      sodipodi:cy="96.736931"
@@ -429,6 +437,7 @@
      style="opacity:0.7;fill:#666666;fill-opacity:0.743455;stroke:#000000;stroke-width:1.121;stroke-linecap:round;stroke-dasharray:none"
      d="m 185.69731,135.05822 c 0,0 3.10231,12.10247 3.10231,12.10247 0,0 216.00104,-4.31628 216.00104,-4.31628 0,0 -2.76736,-10.15904 -2.76736,-10.15904 z"
      id="path12"
+     class="shuttle-part"
      inkscape:path-effect="#path-effect12"
      inkscape:original-d="m 185.69731,135.05822 3.10231,12.10247 216.00104,-4.31628 -2.76736,-10.15904 z"
      sodipodi:nodetypes="ccccc"
@@ -437,46 +446,52 @@
      style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
      d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
      id="path10"
+     class="shuttle-part"
      inkscape:path-effect="#path-effect10"
      inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
      sodipodi:nodetypes="ccc"
-     transform="matrix(1.0823629,0,0,1.5260074,149.50389,-47.602372)" />
+     transform="matrix(1.0784044,0,0,1.6379815,150.37736,-62.560758)" />
   <path
      style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
      d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
      id="path10-9"
+     class="shuttle-part"
      inkscape:path-effect="#path-effect10-3"
      inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
      sodipodi:nodetypes="ccc"
-     transform="matrix(1.0823629,0,0,1.5260074,104.41902,-47.602372)" />
+     transform="matrix(1.0789953,0,0,1.6286419,105.17461,-61.313269)" />
   <path
      style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
      d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
      id="path10-2"
+     class="shuttle-part"
      inkscape:path-effect="#path-effect10-5"
      inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
      sodipodi:nodetypes="ccc"
-     transform="matrix(1.0823629,0,0,1.5260074,63.567162,-47.602372)" />
+     transform="matrix(1.0819798,0,0,1.5819533,63.661175,-55.076915)" />
   <path
      style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
      d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
      id="path10-9-2"
+     class="shuttle-part"
      inkscape:path-effect="#path-effect10-3-0"
      inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
      sodipodi:nodetypes="ccc"
-     transform="matrix(1.0823629,0,0,1.5260074,18.482287,-47.602372)" />
+     transform="matrix(1.0819798,0,0,1.5819533,18.592258,-55.076915)" />
   <path
      style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
      d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
      id="path10-2-7"
+     class="shuttle-part"
      inkscape:path-effect="#path-effect10-5-3"
      inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
      sodipodi:nodetypes="ccc"
-     transform="matrix(1.0823629,0,0,1.5260074,-28.725122,-47.602372)" />
+     transform="matrix(1.0805358,0,0,1.5540301,-28.311253,-51.345262)" />
   <path
      style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
      d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
      id="path10-9-2-9"
+     class="shuttle-part"
      inkscape:path-effect="#path-effect10-3-0-7"
      inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
      sodipodi:nodetypes="ccc"
@@ -485,12 +500,14 @@
      style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
      d="m 209.62795,133.01693 c 69.0341,-0.56125 138.06821,-1.12251 207.10231,-1.68376"
      id="path11"
+     class="shuttle-part"
      inkscape:path-effect="#path-effect11"
      inkscape:original-d="m 209.62795,133.01693 c 69.0341,-0.56125 138.06821,-1.1225 207.10231,-1.68376"
      transform="matrix(1.0755073,0,0,2.8011491,-46.707363,-213.15162)" />
   <rect
      style="opacity:0.7;fill:#87ffff;fill-opacity:0.743455;stroke:#000000;stroke-width:0.927706;stroke-linecap:round;stroke-dasharray:none"
      id="rect11"
+     class="shuttle-part"
      width="19.577963"
      height="24.115299"
      x="295.30756"
@@ -500,6 +517,7 @@
   <rect
      style="opacity:0.7;fill:#87ffff;fill-opacity:0.743455;stroke:#000000;stroke-width:0.660464;stroke-linecap:round;stroke-dasharray:none"
      id="rect11-0"
+     class="shuttle-part"
      width="13.891566"
      height="17.226065"
      x="448.39407"
