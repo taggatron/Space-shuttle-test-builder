@@ -467,6 +467,11 @@ function playOutcomeAnimation(summary) {
       explosionEl.style.display = 'inline';
       explosionEl.style.opacity = '1';
       explosionEl.classList.add('explode');
+      // ensure explosion ends invisible and animation class is cleared
+      setTimeout(() => {
+        explosionEl.classList.remove('explode');
+        explosionEl.style.opacity = '0';
+      }, 1000);
     }
     // add fragment effect on main parts (staggered slightly)
     if (fuselageEl) fuselageEl.classList.add('fragment-body');
@@ -485,6 +490,11 @@ function playOutcomeAnimation(summary) {
         explosionEl.style.display = 'inline';
         explosionEl.style.opacity = '1';
         explosionEl.classList.add('explode');
+        // ensure explosion ends invisible and animation class is cleared
+        setTimeout(() => {
+          explosionEl.classList.remove('explode');
+          explosionEl.style.opacity = '0';
+        }, 1000);
       }
       if (fuselageEl) fuselageEl.classList.add('fragment-body');
       if (noseEl) setTimeout(() => noseEl.classList.add('fragment-nose'), 80);

@@ -26,6 +26,11 @@ select { width:100%; padding:4px }
 #launchFlame { fill:orange; opacity:0.9 }
 .explosion circle { fill:#ffcc33 }
 
+/* Ensure explosion scales from its own centre */
+.explosion {
+  transform-origin: center center;
+}
+
 /* Make the SVG explosion feel larger and more dramatic */
 .explosion.explode {
   animation: bigExplode 0.9s ease-out 0s 2 alternate;
@@ -48,7 +53,6 @@ select { width:100%; padding:4px }
 }
 .launch-sequence { /* animation removed to keep shuttle fixed */ }
 .space-drift { /* animation removed to keep shuttle fixed */ }
-.explode { animation: explode 0.7s ease-out forwards; }
 .fragment-body { animation: fragmentBody 0.9s ease-out forwards; transform-origin:center; }
 .fragment-nose { animation: fragmentNose 0.9s ease-out forwards; transform-origin:center; }
 .fragment-wings { animation: fragmentWings 0.9s ease-out forwards; transform-origin:center; }
@@ -75,11 +79,6 @@ select { width:100%; padding:4px }
 }
 
 /* launchPath and spaceDrift no longer used for SVG movement */
-
-@keyframes explode {
-  0% { opacity:1; transform: scale(1); }
-  100% { opacity:0; transform: scale(2); }
-}
 
 @keyframes fragmentBody {
   0% { opacity:1; transform: translate(0,0) scale(1) rotate(0deg); }
