@@ -382,6 +382,9 @@ function playOutcomeAnimation(summary) {
   shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence');
   if (launchFlameEl) launchFlameEl.classList.add('hidden');
   if (explosionEl) explosionEl.classList.add('hidden');
+  if (fuselageEl) fuselageEl.classList.remove('fragment');
+  if (noseEl) noseEl.classList.remove('fragment');
+  if (wingTipsEl) wingTipsEl.classList.remove('fragment');
 
   const tooHeavy = mass > 50000;
   const badInsulation = insulationRating < 1;
@@ -392,6 +395,10 @@ function playOutcomeAnimation(summary) {
       explosionEl.classList.remove('hidden');
       explosionEl.classList.add('explode');
     }
+    // add fragment effect on main parts
+    if (fuselageEl) fuselageEl.classList.add('fragment');
+    if (noseEl) noseEl.classList.add('fragment');
+    if (wingTipsEl) wingTipsEl.classList.add('fragment');
     startSummaryProgress(1500);
   } else if (badInsulation) {
     // survives launch, burns on re-entry
@@ -402,6 +409,9 @@ function playOutcomeAnimation(summary) {
         explosionEl.classList.remove('hidden');
         explosionEl.classList.add('explode');
       }
+      if (fuselageEl) fuselageEl.classList.add('fragment');
+      if (noseEl) noseEl.classList.add('fragment');
+      if (wingTipsEl) wingTipsEl.classList.add('fragment');
     }, 2500);
     startSummaryProgress(2500 + 700);
   } else {

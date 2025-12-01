@@ -38,6 +38,7 @@ select { width:100%; padding:4px }
 .launch-sequence { /* animation removed to keep shuttle fixed */ }
 .space-drift { /* animation removed to keep shuttle fixed */ }
 .explode { animation: explode 0.7s ease-out forwards; }
+.fragment { animation: fragmentBurst 0.9s ease-out forwards; transform-origin:center; }
 
 @keyframes launch {
   0% { transform: translateY(60px) scale(1); opacity:1 }
@@ -64,6 +65,11 @@ select { width:100%; padding:4px }
 @keyframes explode {
   0% { opacity:1; transform: scale(1); }
   100% { opacity:0; transform: scale(2); }
+}
+
+@keyframes fragmentBurst {
+  0% { opacity:1; transform: translate(0,0) scale(1) rotate(0deg); }
+  100% { opacity:0; transform: translate(40px,-40px) scale(0.8) rotate(25deg); }
 }
 
 #summaryTable { background: rgba(255,255,255,0.03); padding:12px; border-radius:6px }

@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const rooms = {}; // roomName -> { players: { socketId -> {teamName, selections, totalCost, totalMass, ready}}, hostSocket, gameRunning, gameEndTimer, gameEndTime }
 // For quick testing during development we use a 45 second round.
 // Change this back to 10 * 60 * 1000 for normal 10 minute games.
-const GAME_DURATION_MS = 45 * 1000; // 45 seconds (testing)
+const GAME_DURATION_MS = 15 * 1000; // 15 seconds (testing)
 
 io.on('connection', (socket) => {
   console.log('socket connected', socket.id);

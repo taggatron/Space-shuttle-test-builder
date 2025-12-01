@@ -21,15 +21,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="1.1110041"
-     inkscape:cx="291.62808"
-     inkscape:cy="127.36226"
-     inkscape:window-width="1408"
+     inkscape:zoom="2.9852456"
+     inkscape:cx="84.582654"
+     inkscape:cy="122.1005"
+     inkscape:window-width="1296"
      inkscape:window-height="860"
-     inkscape:window-x="0"
+     inkscape:window-x="221"
      inkscape:window-y="34"
      inkscape:window-maximized="0"
-     inkscape:current-layer="shuttleSvg" />
+     inkscape:current-layer="explosion" />
   <defs
      id="defs2">
     <inkscape:path-effect
@@ -187,15 +187,42 @@
      stroke-width="1.64158"
      style="fill:url(#linearGradient7)"
      sodipodi:nodetypes="ccccc" />
-  <path
-     id="part-fuselage"
-     class="shuttle-part fuselage"
-     d="m 175.70384,92.208662 c 94.6697,-0.242724 247.26189,-8.027446 270,0 10.49577,4.887529 17.18165,15.226988 38.01622,27.193988 20.83457,11.96701 55.81783,25.56156 58.61436,32.67301 5.59305,14.2229 4.17793,31.71231 4.53477,45.04087 0.33042,12.34206 -9.78122,18.26504 -55.53661,29.91824 -42.10507,10.72352 -117.4689,-0.0203 -127.4689,13.313 -86.66667,20 -94.82651,31.86089 -188.15984,11.86089 -5,-6.66667 -8.37434,-20.68062 -19.98765,-24.45137 -74.167583,-24.08156 -72.027664,-21.31696 -72.687104,-27.50054 -2.619136,-44.35554 1.24311,-37.46225 -3.82454,-49.48321 -4.183841,-9.92448 16.675612,-6.28964 16.675612,-12.95631 0,-6.66666 -28.063617,6.84087 -21.36502,0.2854 6.698597,-6.55548 -2.727407,-22.90283 7.037389,-29.42124 9.764796,-6.5184 27.799333,1.16057 36.997933,-5.3949 9.19859,-6.555472 52.15338,-4.411161 57.15338,-11.077828 z"
-     fill="url(#bodyGradient)"
+  <polygon
+     id="launchFlame"
+     class="launch-flame hidden"
+     points="60,205 70,220 80,190 "
+     fill="#ffa500"
+     opacity="0.9"
+     transform="matrix(-2.351376,-1.5929126,1.5300913,-1.6069987,-98.673587,571.97435)" />
+  <rect
+     id="part-engine"
+     class="shuttle-part engine"
+     x="74.326515"
+     y="105.83379"
+     width="65.565857"
+     height="40.000008"
+     rx="6"
+     fill="#9ea8b8"
      stroke="#09162b"
-     stroke-width="2"
-     sodipodi:nodetypes="ccssssccscsssssc"
-     style="fill:url(#linearGradient8)" />
+     stroke-width="1" />
+  <circle
+     cx="79.203873"
+     cy="140.6044"
+     r="7"
+     fill="#555b6b"
+     id="circle2" />
+  <circle
+     cx="78.390251"
+     cy="126.35667"
+     r="8"
+     fill="#555b6b"
+     id="circle3" />
+  <circle
+     cx="78.510071"
+     cy="112.25686"
+     r="7"
+     fill="#555b6b"
+     id="circle4" />
   <!-- Nose cone (part-nose) -->
   <path
      id="part-nose"
@@ -263,25 +290,42 @@
   <!-- Vertical tail fin tied to fuselage colour -->
   <!-- Flame for launch -->
   <polygon
-     id="launchFlame"
-     class="launch-flame hidden"
-     points="60,205 70,220 80,190 "
-     fill="#ffa500"
-     opacity="0.9"
-     transform="matrix(-2.351376,-1.5929126,1.5300913,-1.6069987,-98.673587,571.97435)" />
-  <polygon
      id="launchFlame-8"
      class="launch-flame hidden"
-     points="60,205 70,220 80,190 "
+     points="70,220 80,190 60,205 "
      fill="#ffa500"
      opacity="0.9"
-     transform="matrix(-2.3037114,-1.5729186,1.5767878,-1.4615458,-111.43524,583.48542)" />
+     transform="matrix(-2.3037114,-1.5729186,1.5767878,-1.4615458,-111.43524,552.54829)" />
+  <polygon
+     id="launchFlame-8-0-2"
+     class="launch-flame hidden"
+     points="80,190 60,205 70,220 "
+     fill="#ffa500"
+     opacity="0.9"
+     transform="matrix(-1.4589546,-1.2510625,0.9985894,-1.1624792,-43.903046,454.70804)"
+     style="fill:#ff8600;fill-opacity:1" />
+  <polygon
+     id="launchFlame-8-0"
+     class="launch-flame hidden"
+     points="70,220 80,190 60,205 "
+     fill="#ffa500"
+     opacity="0.9"
+     transform="matrix(-1.4589546,-1.2510625,0.9985894,-1.1624792,-42.89302,468.39533)"
+     style="fill:#ff8600;fill-opacity:1" />
   <!-- Explosion group -->
   <g
      id="explosion"
      class="explosion hidden"
-     style="display:none"
-     sodipodi:insensitive="true">
+     style="display:inline">
+    <path
+       id="part-fuselage"
+       class="shuttle-part fuselage"
+       d="m 175.70384,92.208662 c 94.6697,-0.242724 247.26189,-8.027446 270,0 10.49577,4.887529 17.18165,15.226988 38.01622,27.193988 20.83457,11.96701 55.81783,25.56156 58.61436,32.67301 5.59305,14.2229 4.17793,31.71231 4.53477,45.04087 0.33042,12.34206 -9.78122,18.26504 -55.53661,29.91824 -42.10507,10.72352 -117.4689,-0.0203 -127.4689,13.313 -86.66667,20 -94.82651,31.86089 -188.15984,11.86089 -5,-6.66667 -8.37434,-20.68062 -19.98765,-24.45137 -74.167583,-24.08156 -72.027664,-21.31696 -72.687104,-27.50054 -2.619136,-44.35554 1.24311,-37.46225 -3.82454,-49.48321 3.97496,-2.11712 -2.729835,-13.89081 -2.161621,-18.35843 1.958996,-15.40274 -10.253009,-24.4687 1.349868,-26.26151 12.987414,-2.00673 30.959067,3.68836 40.157667,-2.86711 9.19859,-6.555472 52.15338,-4.411161 57.15338,-11.077828 z"
+       fill="url(#bodyGradient)"
+       stroke="#09162b"
+       stroke-width="2"
+       sodipodi:nodetypes="ccssssccscssssc"
+       style="fill:url(#linearGradient8)" />
     <circle
        cx="260"
        cy="190"
@@ -302,21 +346,10 @@
        id="circle7" />
   </g>
   <rect
-     id="part-engine"
-     class="shuttle-part engine"
-     x="74.326515"
-     y="105.83379"
-     width="65.565857"
-     height="40.000008"
-     rx="6"
-     fill="#9ea8b8"
-     stroke="#09162b"
-     stroke-width="1" />
-  <rect
      id="part-engine-8"
      class="shuttle-part engine"
      x="74.402611"
-     y="148.37334"
+     y="117.4362"
      width="79.673103"
      height="43.973625"
      rx="8.5091667"
@@ -325,38 +358,20 @@
      stroke-width="1.18767"
      ry="0" />
   <circle
-     cx="79.203873"
-     cy="140.6044"
-     r="7"
-     fill="#555b6b"
-     id="circle2" />
-  <circle
-     cx="78.390251"
-     cy="126.35667"
-     r="8"
-     fill="#555b6b"
-     id="circle3" />
-  <circle
-     cx="78.510071"
-     cy="112.25686"
-     r="7"
-     fill="#555b6b"
-     id="circle4" />
-  <circle
      cx="78.827995"
-     cy="184.55779"
+     cy="153.62065"
      r="7"
      fill="#555b6b"
      id="circle2-0" />
   <circle
      cx="78.014374"
-     cy="170.31006"
+     cy="139.37292"
      r="8"
      fill="#555b6b"
      id="circle3-2" />
   <circle
      cx="78.134193"
-     cy="161.61076"
+     cy="130.67363"
      r="7"
      fill="#555b6b"
      id="circle4-4" />
