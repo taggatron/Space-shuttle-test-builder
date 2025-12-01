@@ -457,6 +457,8 @@ function playOutcomeAnimation(summary) {
 
   const tooHeavy = mass > 50000;
   const badInsulation = insulationRating < 1;
+  // track outcome type for summary colouring
+  window.__lastOutcomeType = (tooHeavy || badInsulation) ? 'fail' : 'success';
 
   if (tooHeavy) {
     // fail at takeoff: quick explode near pad
@@ -521,13 +523,26 @@ function startSummaryProgress(totalMs) {
   summaryProgressBar.classList.add('summary-progress-anim');
   // schedule stage highlights: Takeoff ~25%, Space ~60%, Re-entry ~100%
   if (summaryStageEls && summaryStageEls.length) {
-    summaryStageEls.forEach(el => el.classList.remove('summary-stage-active'));
+    summaryStageEls.forEach(el => {
+      el.classList.remove('summary-stage-active','summary-stage-success','summary-stage-fail');
+    });
     const takeoff = Array.from(summaryStageEls).find(el => el.dataset.stage === 'takeoff');
     const space = Array.from(summaryStageEls).find(el => el.dataset.stage === 'space');
     const reentry = Array.from(summaryStageEls).find(el => el.dataset.stage === 'reentry');
     if (takeoff) setTimeout(() => takeoff.classList.add('summary-stage-active'), seconds * 0.1 * 1000);
     if (space) setTimeout(() => space.classList.add('summary-stage-active'), seconds * 0.45 * 1000);
-    if (reentry) setTimeout(() => reentry.classList.add('summary-stage-active'), seconds * 0.8 * 1000);
+    if (reentry) {
+      setTimeout(() => {
+        reentry.classList.add('summary-stage-active');
+        // colour-code final stage by last outcome: success (green) vs fail (red)
+        const lastOutcome = window.__lastOutcomeType;
+        if (lastOutcome === 'success') {
+          reentry.classList.add('summary-stage-success');
+        } else if (lastOutcome === 'fail') {
+          reentry.classList.add('summary-stage-fail');
+        }
+      }, seconds * 0.8 * 1000);
+    }
   }
 }
 

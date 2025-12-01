@@ -367,7 +367,7 @@
   <g
      id="explosion"
      class="explosion hidden"
-     style="display:none;opacity:0">
+     style="display:inline;opacity:0">
     <circle
        cx="260"
        cy="190"

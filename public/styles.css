@@ -25,6 +25,17 @@ select { width:100%; padding:4px }
 .insulation { fill:none; stroke:#ffd27f; stroke-width:6; stroke-linecap:round }
 #launchFlame { fill:orange; opacity:0.9 }
 .explosion circle { fill:#ffcc33 }
+
+/* Make the SVG explosion feel larger and more dramatic */
+.explosion.explode {
+  animation: bigExplode 1s ease-out forwards;
+}
+
+@keyframes bigExplode {
+  0% { opacity:1; transform: scale(1); filter: drop-shadow(0 0 0px rgba(255,200,80,0)); }
+  50% { opacity:1; transform: scale(2.4); filter: drop-shadow(0 0 16px rgba(255,200,80,0.9)); }
+  100% { opacity:0; transform: scale(3.2); filter: drop-shadow(0 0 26px rgba(255,120,40,0.4)); }
+}
 #resultArea { margin-top:12px }
 .hidden { display:none }
 
@@ -94,9 +105,19 @@ select { width:100%; padding:4px }
 
 #summaryStages { display:flex; justify-content:space-between; margin-bottom:8px; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.4); }
 .summary-stage-active {
-  color:#ffffff;
-  text-shadow:0 0 6px rgba(255,255,255,0.9);
+  color:#ffa94d; /* default active: orange during flight */
+  text-shadow:0 0 6px rgba(255,169,77,0.9);
   font-weight:600;
+}
+
+.summary-stage-success {
+  color:#2bff88;
+  text-shadow:0 0 8px rgba(43,255,136,0.9);
+}
+
+.summary-stage-fail {
+  color:#ff4d4d;
+  text-shadow:0 0 8px rgba(255,77,77,0.9);
 }
 
 #summaryProgressContainer { margin-top:4px; background: rgba(255,255,255,0.04); border-radius:999px; overflow:hidden; height:10px; }
