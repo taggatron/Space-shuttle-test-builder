@@ -34,6 +34,7 @@ let insulationEl = null;
 let engineEl = null;
 let engineEl2 = null;
 let launchFlameEl = null;
+let launchFlameAltMainEl = null;
 let launchFlameAlt1El = null;
 let launchFlameAlt2El = null;
 let explosionEl = null;
@@ -43,6 +44,7 @@ const totalMassEl = document.getElementById('totalMass');
 const totalCostEl = document.getElementById('totalCost');
 const budgetVal = document.getElementById('budgetVal');
 const timerEl = document.getElementById('timer');
+const restartTimerBtn = document.getElementById('restartTimerBtn');
 const createRoomBtn = document.getElementById('createRoomBtn');
 const joinRoomBtn = document.getElementById('joinRoomBtn');
 const roomNameInput = document.getElementById('roomNameInput');
@@ -108,6 +110,7 @@ async function loadShuttleSvg() {
     engineEl2 = container.querySelector('#part-engine-8');
     // main center flame plus extra lobes
     launchFlameEl = container.querySelector('#launchFlame');
+    launchFlameAltMainEl = container.querySelector('#launchFlame-8-0-2');
     launchFlameAlt1El = container.querySelector('#launchFlame-8');
     launchFlameAlt2El = container.querySelector('#launchFlame-8-0');
     explosionEl = container.querySelector('#explosion');
@@ -274,10 +277,20 @@ function startLocalTimer(gameEndTime) {
     timerEl.textContent = `${mm}:${ss}`;
     if (remaining <= 0) {
       clearInterval(timerInterval);
+      // mimic launch flames at the exact moment of liftoff
+      playLaunchSequence();
     }
   }
   tick();
   timerInterval = setInterval(tick, 1000);
+}
+
+// Local-only restart of countdown display (does not change server end time)
+if (restartTimerBtn) {
+  restartTimerBtn.addEventListener('click', () => {
+    clearInterval(timerInterval);
+    timerEl.textContent = '--:--';
+  });
 }
 
 socket.on('gameOver', ({ summary }) => {
@@ -372,18 +385,19 @@ function playLaunchSequence() {
   if (!shuttleSvg) return;
   shuttleSvg.classList.remove('explode','reentry-glow');
   // Just show a brief engine flame without moving the shuttle
-  const showFlame = (el, delay = 0) => {
+  const showFlame = (el, delay = 0, visibleMs = 1400) => {
     if (!el) return;
     setTimeout(() => {
       el.classList.remove('hidden');
       setTimeout(() => {
         el.classList.add('hidden');
-      }, 800);
+      }, visibleMs);
     }, delay);
   };
   showFlame(launchFlameEl, 0);
-  showFlame(launchFlameAlt1El, 60);
-  showFlame(launchFlameAlt2El, 120);
+  showFlame(launchFlameAltMainEl, 40);
+  showFlame(launchFlameAlt1El, 90);
+  showFlame(launchFlameAlt2El, 140);
 }
 
 function playOutcomeAnimation(summary) {
@@ -398,8 +412,9 @@ function playOutcomeAnimation(summary) {
 
   shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence');
   if (launchFlameEl) launchFlameEl.classList.add('hidden');
-    if (launchFlameAlt1El) launchFlameAlt1El.classList.add('hidden');
-    if (launchFlameAlt2El) launchFlameAlt2El.classList.add('hidden');
+  if (launchFlameAltMainEl) launchFlameAltMainEl.classList.add('hidden');
+  if (launchFlameAlt1El) launchFlameAlt1El.classList.add('hidden');
+  if (launchFlameAlt2El) launchFlameAlt2El.classList.add('hidden');
   if (explosionEl) explosionEl.classList.add('hidden');
   if (fuselageEl) fuselageEl.classList.remove('fragment-body');
   if (noseEl) noseEl.classList.remove('fragment-nose');

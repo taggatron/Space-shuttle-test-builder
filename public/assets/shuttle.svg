@@ -21,9 +21,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="1.6200435"
-     inkscape:cx="132.40385"
-     inkscape:cy="88.577869"
+     inkscape:zoom="1.307218"
+     inkscape:cx="218.40274"
+     inkscape:cy="133.48959"
      inkscape:window-width="1296"
      inkscape:window-height="860"
      inkscape:window-x="221"
@@ -32,6 +32,40 @@
      inkscape:current-layer="shuttleSvg" />
   <defs
      id="defs2">
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect2"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,3.1302005,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1"
+       radius="0"
+       unit="px"
+       method="auto"
+       mode="F"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect1"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,7.2550401,0,1 @ F,0,0,1,0,0,0,1"
+       radius="0"
+       unit="px"
+       method="auto"
+       mode="F"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
     <inkscape:path-effect
        effect="bspline"
        id="path-effect12"
@@ -276,11 +310,13 @@
   <polygon
      id="launchFlame-8-0-2"
      class="launch-flame hidden"
-     points="80,190 60,205 70,220 "
+     points="60,205 70,220 80,190 "
      fill="#ffa500"
      opacity="0.9"
      transform="matrix(-1.4589546,-1.2510625,0.9985894,-1.1624792,-43.903046,454.70804)"
-     style="fill:#ff8600;fill-opacity:1;opacity:0.79" />
+     style="opacity:0.79;fill:#ff8600;fill-opacity:1"
+     inkscape:path-effect="#path-effect2"
+     d="M 77.49584,191.87812 60,205 l 10,15 9.010144,-27.03043 a 0.97780101,0.97780101 35.782526 0 0 -1.514304,-1.09145 z" />
   <polygon
      id="launchFlame-8"
      class="launch-flame hidden"
@@ -291,11 +327,13 @@
   <polygon
      id="launchFlame-8-0"
      class="launch-flame hidden"
-     points="70,220 80,190 60,205 "
+     points="80,190 60,205 70,220 "
      fill="#ffa500"
      opacity="0.9"
      transform="matrix(-1.4589546,-1.2510625,0.9985894,-1.1624792,-42.89302,468.39533)"
-     style="fill:#ff8600;fill-opacity:1;opacity:0.73" />
+     style="opacity:0.73;fill:#ff8600;fill-opacity:1"
+     inkscape:path-effect="#path-effect1"
+     d="m 70,220 7.705755,-23.11726 a 2.2663039,2.2663039 35.782526 0 0 -3.509787,-2.52972 L 60,205 Z" />
   <path
      id="part-fuselage"
      class="shuttle-part fuselage"
@@ -325,7 +363,7 @@
   <g
      id="explosion"
      class="explosion hidden"
-     style="display:inline">
+     style="display:none">
     <circle
        cx="260"
        cy="190"
