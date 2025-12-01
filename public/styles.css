@@ -30,7 +30,7 @@ select { width:100%; padding:4px }
 #launchPad {
   width: 260px;
   height: 40px;
-  margin-top: 10px;
+  margin-top: 20px;
   border-radius: 12px 12px 4px 4px;
   background: linear-gradient(180deg,#3a3f4d,#171b24);
   box-shadow: 0 8px 26px rgba(0,0,0,0.7);
@@ -82,9 +82,23 @@ select { width:100%; padding:4px }
   margin-top: 60px;
 }
 
+/* Slightly scale down shuttle after liftoff to give altitude feeling */
+.shuttle-rotate-launch,
+.shuttle-rotate-space,
+.shuttle-rotate-reentry {
+  transform-origin: 50% 60%;
+}
+
+.shuttle-rotate-launch #shuttleSvg,
+.shuttle-rotate-space #shuttleSvg,
+.shuttle-rotate-reentry #shuttleSvg {
+  transform: scale(0.8);
+  transition: transform 0.9s ease-in-out;
+}
+
 /* Launch pad shrink + fade as shuttle climbs */
 #launchPad.shrink-away {
-  animation: launchPadShrinkFade 3s ease-in forwards;
+  animation: launchPadShrinkFade 0.5s ease-in forwards;
 }
 
 @keyframes launchPadShrinkFade {
