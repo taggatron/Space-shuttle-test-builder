@@ -537,6 +537,9 @@ function swapSummaryAndSelectors() {
   // Ensure layout inside gameArea is: summary | visual
   const visual = document.getElementById('visual');
   if (!visual) return;
+  // reset any previous swap animation classes
+  summarySection.classList.remove('summary-swap-in');
+  selectorsSection.classList.remove('selectors-swap-down');
   // Insert summary before visual so shuttle animation remains visible on the right
   gameArea.insertBefore(summarySection, visual);
   // Keep selectors visible below the main game area
@@ -546,6 +549,10 @@ function swapSummaryAndSelectors() {
   }
   // stretch selectors to full width once below
   selectorsSection.classList.add('selectors-fullwidth');
+  // trigger swap animations
+  void summarySection.offsetWidth; // force reflow for restart
+  summarySection.classList.add('summary-swap-in');
+  selectorsSection.classList.add('selectors-swap-down');
   summarySection.classList.remove('hidden');
 }
 

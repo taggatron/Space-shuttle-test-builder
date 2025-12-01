@@ -99,13 +99,32 @@ select { width:100%; padding:4px }
 #summaryProgressBar { width:0%; height:100%; background: linear-gradient(90deg,#2bff88,#2b7cff); transition: width 0.2s linear; }
 .summary-progress-anim { animation: summaryProgress 3s linear forwards; }
 
+@keyframes summaryProgress {
+  0% { width:0%; }
+  100% { width:100%; }
+}
+
 /* Layout changes after countdown swap */
 .selectors-fullwidth {
   width: 100%;
   max-width: none;
 }
 
-@keyframes summaryProgress {
-  0% { width:0%; }
-  100% { width:100%; }
+/* Swap animation when timer completes */
+.summary-swap-in {
+  animation: summarySlideIn 0.6s ease-out forwards;
+}
+
+.selectors-swap-down {
+  animation: selectorsSlideDown 0.6s ease-out forwards;
+}
+
+@keyframes summarySlideIn {
+  0% { opacity:0; transform: translateX(-30px); }
+  100% { opacity:1; transform: translateX(0); }
+}
+
+@keyframes selectorsSlideDown {
+  0% { opacity:0; transform: translateY(-20px); }
+  100% { opacity:1; transform: translateY(0); }
 }
