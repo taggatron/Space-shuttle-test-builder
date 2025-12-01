@@ -92,8 +92,12 @@ select { width:100%; padding:4px }
 
 #summaryTable { background: rgba(255,255,255,0.03); padding:12px; border-radius:6px; max-width:480px }
 
-#summaryStages { display:flex; gap:16px; margin-bottom:8px; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.4); }
-.summary-stage-active { color:#ffffff; }
+#summaryStages { display:flex; justify-content:space-between; margin-bottom:8px; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.4); }
+.summary-stage-active {
+  color:#ffffff;
+  text-shadow:0 0 6px rgba(255,255,255,0.9);
+  font-weight:600;
+}
 
 #summaryProgressContainer { margin-top:4px; background: rgba(255,255,255,0.04); border-radius:999px; overflow:hidden; height:10px; }
 #summaryProgressBar { width:0%; height:100%; background: linear-gradient(90deg,#2bff88,#2b7cff); transition: width 0.2s linear; }

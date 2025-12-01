@@ -515,7 +515,8 @@ function startSummaryProgress(totalMs) {
   summaryProgressBar.classList.remove('summary-progress-anim');
   // force reflow so animation can restart
   void summaryProgressBar.offsetWidth;
-  const seconds = Math.max(0.5, (totalMs || 3000) / 1000);
+  // slow overall animation so stages are clearer
+  const seconds = Math.max(1.5, (totalMs || 6000) / 1000);
   summaryProgressBar.style.animationDuration = `${seconds}s`;
   summaryProgressBar.classList.add('summary-progress-anim');
   // schedule stage highlights: Takeoff ~25%, Space ~60%, Re-entry ~100%
@@ -524,9 +525,9 @@ function startSummaryProgress(totalMs) {
     const takeoff = Array.from(summaryStageEls).find(el => el.dataset.stage === 'takeoff');
     const space = Array.from(summaryStageEls).find(el => el.dataset.stage === 'space');
     const reentry = Array.from(summaryStageEls).find(el => el.dataset.stage === 'reentry');
-    if (takeoff) setTimeout(() => takeoff.classList.add('summary-stage-active'), seconds * 0.25 * 1000);
-    if (space) setTimeout(() => space.classList.add('summary-stage-active'), seconds * 0.6 * 1000);
-    if (reentry) setTimeout(() => reentry.classList.add('summary-stage-active'), seconds * 0.99 * 1000);
+    if (takeoff) setTimeout(() => takeoff.classList.add('summary-stage-active'), seconds * 0.1 * 1000);
+    if (space) setTimeout(() => space.classList.add('summary-stage-active'), seconds * 0.45 * 1000);
+    if (reentry) setTimeout(() => reentry.classList.add('summary-stage-active'), seconds * 0.8 * 1000);
   }
 }
 
