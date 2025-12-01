@@ -60,6 +60,7 @@ const summaryTable = document.getElementById('summaryTable');
 const summaryProgressContainer = document.getElementById('summaryProgressContainer');
 const summaryProgressBar = document.getElementById('summaryProgressBar');
 const summaryStageEls = document.querySelectorAll('#summaryStages .summary-stage');
+const selectorsSection = document.getElementById('selectors');
 
 budgetVal.textContent = BUDGET;
 
@@ -302,6 +303,8 @@ function startLocalTimer(gameEndTime) {
       clearInterval(timerInterval);
       // mimic launch flames at the exact moment of liftoff
       playLaunchSequence();
+      // when countdown finishes, swap layout: bring summary up next to shuttle
+      swapSummaryAndSelectors();
     }
   }
   tick();
@@ -525,6 +528,25 @@ function startSummaryProgress(totalMs) {
     if (space) setTimeout(() => space.classList.add('summary-stage-active'), seconds * 0.6 * 1000);
     if (reentry) setTimeout(() => reentry.classList.add('summary-stage-active'), seconds * 0.99 * 1000);
   }
+}
+
+function swapSummaryAndSelectors() {
+  if (!selectorsSection || !summarySection) return;
+  const gameArea = document.getElementById('gameArea');
+  if (!gameArea) return;
+  // Ensure layout inside gameArea is: summary | visual
+  const visual = document.getElementById('visual');
+  if (!visual) return;
+  // Insert summary before visual so shuttle animation remains visible on the right
+  gameArea.insertBefore(summarySection, visual);
+  // Keep selectors visible below the main game area
+  const main = document.querySelector('main');
+  if (main && selectorsSection.parentElement !== main) {
+    main.insertBefore(selectorsSection, gameArea.nextSibling);
+  }
+  // stretch selectors to full width once below
+  selectorsSection.classList.add('selectors-fullwidth');
+  summarySection.classList.remove('hidden');
 }
 
 // initialize

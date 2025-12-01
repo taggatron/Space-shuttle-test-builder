@@ -11,7 +11,7 @@ main { padding: 16px; display:flex; flex-direction:column; gap:12px }
 #lobby { margin-left:12px; display:flex; gap:8px; align-items:center }
 #playersInRoom { color:#dfefff }
 #gameArea { display:flex; gap:20px }
-#selectors { width:480px; background: rgba(255,255,255,0.03); padding:12px; border-radius:6px }
+#selectors { width:480px; max-width:480px; background: rgba(255,255,255,0.03); padding:12px; border-radius:6px }
 table { width:100%; border-collapse:collapse }
 th, td { padding:8px; border-bottom:1px solid rgba(255,255,255,0.06); text-align:left }
 select { width:100%; padding:4px }
@@ -90,7 +90,7 @@ select { width:100%; padding:4px }
   100% { opacity:0; transform: translate(30px,-30px) scale(0.8) rotate(18deg); }
 }
 
-#summaryTable { background: rgba(255,255,255,0.03); padding:12px; border-radius:6px }
+#summaryTable { background: rgba(255,255,255,0.03); padding:12px; border-radius:6px; max-width:480px }
 
 #summaryStages { display:flex; gap:16px; margin-bottom:8px; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.4); }
 .summary-stage-active { color:#ffffff; }
@@ -98,6 +98,12 @@ select { width:100%; padding:4px }
 #summaryProgressContainer { margin-top:4px; background: rgba(255,255,255,0.04); border-radius:999px; overflow:hidden; height:10px; }
 #summaryProgressBar { width:0%; height:100%; background: linear-gradient(90deg,#2bff88,#2b7cff); transition: width 0.2s linear; }
 .summary-progress-anim { animation: summaryProgress 3s linear forwards; }
+
+/* Layout changes after countdown swap */
+.selectors-fullwidth {
+  width: 100%;
+  max-width: none;
+}
 
 @keyframes summaryProgress {
   0% { width:0%; }
