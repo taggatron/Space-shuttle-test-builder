@@ -406,19 +406,22 @@
      cy="140.6044"
      r="7"
      fill="#555b6b"
+     class="shuttle-part"
      id="circle2" />
   <circle
      cx="78.390251"
      cy="126.35667"
      r="8"
      fill="#555b6b"
+     class="shuttle-part"
      id="circle3" />
   <circle
      cx="78.510071"
      cy="112.25686"
      r="7"
      fill="#555b6b"
-     id="circle4" />
+     id="circle4"
+     class="shuttle-part" />
   <!-- Nose cone (part-nose) -->
   <path
      id="part-nose"
@@ -585,6 +588,7 @@
   <path
      style="fill:#000000;stroke:#000000;stroke-width:0.235852;stroke-linecap:round"
      id="path9"
+     class="shuttle-part"
      sodipodi:type="arc"
      sodipodi:cx="422.44431"
      sodipodi:cy="96.736931"
@@ -634,7 +638,7 @@
      style="fill:#000000;stroke:#000000;stroke-width:2.221;stroke-linecap:round"
      d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.09121,19.422505 2.22734,6.68202 3.74991,13.67527 5.27252,20.66868"
      id="path10-9-2"
-     class
+     class="shuttle-part"
      inkscape:path-effect="#path-effect10-3-0"
      inkscape:original-d="m 219.83331,92.877905 c 2.93197,6.370321 5.86387,12.740495 8.79591,19.110955 1.52264,6.99357 3.04521,13.98682 4.56782,20.98023"
      sodipodi:nodetypes="ccc"

@@ -1,4 +1,6 @@
-const socket = io();
+// REST polling endpoints base
+const API_BASE = '/space-shuttle';
+let POLL_INTERVAL_MS = 1500;
 // Configurable thruster boost duration (ms). You can tweak at runtime via window.setThrusterBoostDuration(ms)
 let THRUSTER_BOOST_MS = 3200;
 
@@ -165,9 +167,13 @@ function updateTotals() {
   });
   totalMassEl.textContent = totalMass;
   totalCostEl.textContent = totalCost;
-  // emit update to server if in a room
+  // send update to server via REST if in a room
   if (myTeamName && myRoom) {
-    socket.emit('updateSelection', { roomName: myRoom, selections: mySelections, totalCost, totalMass });
+    fetch(`${API_BASE}/rooms/${encodeURIComponent(myRoom)}/update-selection`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ playerId: getPlayerId(), selections: mySelections, totalCost, totalMass }),
+    }).catch(() => {});
   }
   updateShuttleColours();
 }
@@ -228,34 +234,69 @@ function materialColour(mat) {
   }
 }
 
-createRoomBtn.addEventListener('click', () => {
+createRoomBtn.addEventListener('click', async () => {
   const room = roomNameInput.value && roomNameInput.value.trim();
   myTeamName = teamNameInput.value || ('Team-' + Math.random().toString(36).slice(2,6));
   if (!room) return alert('Enter a room name');
-  socket.emit('createRoom', { roomName: room, teamName: myTeamName });
+  const resp = await fetch(`${API_BASE}/rooms`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ roomName: room, playerId: getPlayerId(), teamName: myTeamName }),
+  });
+  const data = await resp.json();
+  if (resp.ok) onJoinedRoom(room, data.players, data.hostId);
 });
 
-joinRoomBtn.addEventListener('click', () => {
+joinRoomBtn.addEventListener('click', async () => {
   const room = roomNameInput.value && roomNameInput.value.trim();
   myTeamName = teamNameInput.value || ('Team-' + Math.random().toString(36).slice(2,6));
   if (!room) return alert('Enter a room name');
-  socket.emit('joinRoom', { roomName: room, teamName: myTeamName });
+  const resp = await fetch(`${API_BASE}/rooms/${encodeURIComponent(room)}/join`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ playerId: getPlayerId(), teamName: myTeamName }),
+  });
+  const data = await resp.json();
+  if (resp.ok) onJoinedRoom(room, data.players, data.hostId);
 });
 
-readyBtn.addEventListener('click', () => {
+readyBtn.addEventListener('click', async () => {
   if (!myRoom) return;
-  socket.emit('toggleReady', { roomName: myRoom });
+  await fetch(`${API_BASE}/rooms/${encodeURIComponent(myRoom)}/toggle-ready`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ playerId: getPlayerId() }),
+  });
+  // optimistic UI: will be corrected by polling
 });
 
-startBtn.addEventListener('click', () => {
+startBtn.addEventListener('click', async () => {
   if (!myRoom) return;
-  socket.emit('startGame', { roomName: myRoom });
+  const resp = await fetch(`${API_BASE}/rooms/${encodeURIComponent(myRoom)}/start`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ playerId: getPlayerId() }),
+  });
+  const data = await resp.json();
+  if (data && data.gameStarted) {
+    startLocalTimer(data.gameEndTime);
+    readyBtn.classList.add('hidden');
+    startBtn.classList.add('hidden');
+    setThrusterMode('off');
+    if (fuselageEl) fuselageEl.classList.remove('fragment-body');
+    if (noseEl) noseEl.classList.remove('fragment-nose');
+    if (wingTipsEl) wingTipsEl.classList.remove('fragment-wings');
+    playLaunchSequence();
+  }
 });
 
-leaveRoomBtn.addEventListener('click', () => {
+leaveRoomBtn.addEventListener('click', async () => {
   if (!myRoom) return;
-  socket.emit('leaveRoom', { roomName: myRoom });
-  // local cleanup
+  await fetch(`${API_BASE}/rooms/${encodeURIComponent(myRoom)}/leave`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ playerId: getPlayerId() }),
+  });
   myRoom = null;
   currentRoomEl.textContent = '(none)';
   readyBtn.classList.add('hidden');
@@ -264,78 +305,34 @@ leaveRoomBtn.addEventListener('click', () => {
   playersInRoomEl.innerHTML = '';
 });
 
-socket.on('roomsList', (rooms) => {
-  roomsListEl.textContent = rooms.join(', ');
-});
+async function pollRoomsList() {
+  try {
+    const resp = await fetch(`${API_BASE}/rooms`);
+    const data = await resp.json();
+    roomsListEl.textContent = (data.rooms || []).join(', ');
+  } catch {}
+}
 
-socket.on('joinedRoom', ({ roomName, players, hostSocket }) => {
+function onJoinedRoom(roomName, players, hostId) {
   myRoom = roomName;
   currentRoomEl.textContent = roomName;
-  // show lobby controls
   readyBtn.classList.remove('hidden');
   leaveRoomBtn.classList.remove('hidden');
-  // determine host
-  isHost = (hostSocket === socket.id);
+  isHost = (hostId === getPlayerId());
   if (isHost) startBtn.classList.remove('hidden'); else startBtn.classList.add('hidden');
-  // render players
+  renderPlayers(players);
+}
+
+function renderPlayers(players) {
   playersInRoomEl.innerHTML = '';
   players.forEach(p => {
     const div = document.createElement('div');
     div.textContent = `${p.teamName} ${p.ready ? '✓' : ''}`;
     playersInRoomEl.appendChild(div);
   });
-});
+}
 
-socket.on('roomPlayersUpdate', ({ players, hostSocket }) => {
-  // players: [{ socketId, teamName, ready }]
-  playersInRoomEl.innerHTML = '';
-  players.forEach(p => {
-    const div = document.createElement('div');
-    div.textContent = `${p.teamName} ${p.ready ? '✓' : ''}`;
-    playersInRoomEl.appendChild(div);
-  });
-  // update host status for UI
-  isHost = (hostSocket === socket.id);
-  if (isHost) startBtn.classList.remove('hidden'); else startBtn.classList.add('hidden');
-});
-
-socket.on('gameStarted', ({ gameStartTime, gameEndTime, durationMs }) => {
-  startLocalTimer(gameEndTime);
-  // hide lobby ready/start controls while running
-  readyBtn.classList.add('hidden');
-  startBtn.classList.add('hidden');
-  // ensure shuttle is visible and all effects reset at game start
-  if (shuttleSvg) {
-    shuttleSvg.classList.remove('explode','reentry-glow','space-drift','launch-sequence','shuttle-rotate-launch','shuttle-rotate-space','shuttle-rotate-reentry','shuttle-launch-flash');
-  }
-  if (launchFlameEl) launchFlameEl.classList.add('hidden');
-  if (launchFlameAltMainEl) launchFlameAltMainEl.classList.add('hidden');
-  if (launchFlameAlt1El) launchFlameAlt1El.classList.add('hidden');
-  if (launchFlameAlt2El) launchFlameAlt2El.classList.add('hidden');
-  if (explosionEl) {
-    explosionEl.classList.add('hidden');
-    explosionEl.style.opacity = '0';
-  }
-  shuttleState = 'idle';
-  if (launchPadEl) {
-    launchPadEl.classList.remove('shrink-away');
-    launchPadEl.style.opacity = '';
-    launchPadEl.style.transform = '';
-  }
-  if (gameRootEl) {
-    gameRootEl.classList.remove('shuttle-y-launch','shuttle-y-space','shuttle-y-reentry');
-  }
-  // reset thruster visuals
-  setThrusterMode('off');
-  if (fuselageEl) fuselageEl.classList.remove('fragment-body');
-  if (noseEl) noseEl.classList.remove('fragment-nose');
-  if (wingTipsEl) wingTipsEl.classList.remove('fragment-wings');
-  if (shuttleSvg) {
-    shuttleSvg.querySelectorAll('.fragment-random').forEach(el => el.classList.remove('fragment-random'));
-  }
-  // optional: brief flame pulse at start of game
-  playLaunchSequence();
-});
+// game start handled in startBtn click via REST response
 
 let timerInterval = null;
 function startLocalTimer(gameEndTime) {
@@ -386,20 +383,44 @@ if (restartTimerBtn) {
   });
 }
 
-socket.on('gameOver', ({ summary }) => {
-  showSummary(summary);
-  playOutcomeAnimation(summary);
-});
+async function pollSummary() {
+  if (!myRoom) return;
+  try {
+    const resp = await fetch(`${API_BASE}/rooms/${encodeURIComponent(myRoom)}/summary`);
+    const data = await resp.json();
+    if (resp.ok && Array.isArray(data.summary) && data.summary.length) {
+      showSummary(data.summary);
+      playOutcomeAnimation(data.summary);
+    }
+  } catch {}
+}
 
-socket.on('summaryUpdate', (summary) => {
-  // can show intermediate summaries
-  console.log('summaryUpdate', summary);
-});
+// summary updates will be fetched via polling
 
-socket.on('connect', () => {
-  // ask server for rooms list periodically
-  setTimeout(() => socket.emit('requestRooms'), 200);
-});
+// polling loop
+function getPlayerId() {
+  if (!window.__playerId) {
+    window.__playerId = 'p-' + Math.random().toString(36).slice(2,10);
+  }
+  return window.__playerId;
+}
+
+setInterval(() => {
+  pollRoomsList();
+  if (myRoom) {
+    fetch(`${API_BASE}/rooms/${encodeURIComponent(myRoom)}/state`).then(r => r.json()).then(data => {
+      if (!data || !data.players) return;
+      renderPlayers(data.players);
+      isHost = (data.hostId === getPlayerId());
+      if (isHost) startBtn.classList.remove('hidden'); else startBtn.classList.add('hidden');
+      // if server indicates game running, keep timer aligned
+      if (data.gameRunning && data.gameEndTime) {
+        startLocalTimer(data.gameEndTime);
+      }
+    }).catch(() => {});
+    pollSummary();
+  }
+}, POLL_INTERVAL_MS);
 
 socket.on('teamPartialUpdate', (payload) => {
   // optional UI hook for showing team's partial totals
