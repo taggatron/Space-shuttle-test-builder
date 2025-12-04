@@ -1,4 +1,6 @@
 const socket = io();
+// Configurable thruster boost duration (ms). You can tweak at runtime via window.setThrusterBoostDuration(ms)
+let THRUSTER_BOOST_MS = 3200;
 
 // Parts data from screenshot (area m2, volume m3 assuming 0.1m thickness)
 const PARTS = [
@@ -37,6 +39,8 @@ let launchFlameEl = null;
 let launchFlameAltMainEl = null;
 let launchFlameAlt1El = null;
 let launchFlameAlt2El = null;
+let thrusterCoreEl = null; // path13
+let thrusterFlameMainEl = null; // launchFlame-8-9
 let explosionEl = null;
 let shuttleState = 'idle'; // 'idle' | 'launch' | 'space' | 'reentry'
 let gameRootEl = null; // for vertical shuttle positioning
@@ -120,6 +124,9 @@ async function loadShuttleSvg() {
     launchFlameAltMainEl = container.querySelector('#launchFlame-8-0-2');
     launchFlameAlt1El = container.querySelector('#launchFlame-8');
     launchFlameAlt2El = container.querySelector('#launchFlame-8-0');
+    // main thruster core and flame
+    thrusterCoreEl = container.querySelector('#path13');
+    thrusterFlameMainEl = container.querySelector('#launchFlame-8-9');
     explosionEl = container.querySelector('#explosion');
     // ensure explosion starts fully invisible
     if (explosionEl) {
@@ -186,6 +193,28 @@ function updateShuttleColours() {
     if (engineEl2) engineEl2.style.fill = materialColour(engineMat);
   }
 }
+
+function setThrusterMode(mode) {
+  const setClasses = (el, onCls, spaceCls, offCls) => {
+    if (!el) return;
+    el.classList.remove(onCls, spaceCls, offCls, 'hidden');
+    if (mode === 'boost') el.classList.add(onCls);
+    else if (mode === 'space') el.classList.add(spaceCls);
+    else el.classList.add(offCls);
+  };
+  setClasses(thrusterCoreEl, 'thruster-core-boost', 'thruster-core-space', 'thruster-core-off');
+  setClasses(thrusterFlameMainEl, 'thruster-flame-boost', 'thruster-flame-space', 'thruster-flame-off');
+  // add subtle white flicker glow only during boost
+  if (thrusterCoreEl) {
+    thrusterCoreEl.classList.toggle('thruster-core-flicker', mode === 'boost');
+  }
+}
+
+// Expose a small API to adjust boost duration without redeploying
+window.setThrusterBoostDuration = function(ms) {
+  const n = Number(ms);
+  if (!isNaN(n) && n >= 0) THRUSTER_BOOST_MS = n;
+};
 
 function materialColour(mat) {
   switch (mat.name) {
@@ -296,6 +325,8 @@ socket.on('gameStarted', ({ gameStartTime, gameEndTime, durationMs }) => {
   if (gameRootEl) {
     gameRootEl.classList.remove('shuttle-y-launch','shuttle-y-space','shuttle-y-reentry');
   }
+  // reset thruster visuals
+  setThrusterMode('off');
   if (fuselageEl) fuselageEl.classList.remove('fragment-body');
   if (noseEl) noseEl.classList.remove('fragment-nose');
   if (wingTipsEl) wingTipsEl.classList.remove('fragment-wings');
@@ -336,6 +367,9 @@ function startLocalTimer(gameEndTime) {
         void launchPadEl.offsetWidth;
         launchPadEl.classList.add('shrink-away');
       }
+      // kick thrusters to boost, then taper to space idle
+      setThrusterMode('boost');
+      setTimeout(() => setThrusterMode('space'), THRUSTER_BOOST_MS);
       // when countdown finishes, swap layout: bring summary up next to shuttle
       swapSummaryAndSelectors();
     }
@@ -506,6 +540,8 @@ function playOutcomeAnimation(summary) {
     shuttleSvg.classList.add('shuttle-rotate-space');
   }
   shuttleState = 'space';
+  // ensure thrusters are in space idle during the space phase
+  setThrusterMode('space');
 
   if (tooHeavy) {
     // takeoff failure: show brief upright ascent, then tip down and explode near pad
@@ -519,6 +555,7 @@ function playOutcomeAnimation(summary) {
         gameRootEl.classList.remove('shuttle-y-space');
         gameRootEl.classList.add('shuttle-y-reentry');
       }
+      setThrusterMode('off');
       if (explosionEl) {
         explosionEl.classList.remove('hidden');
         explosionEl.style.display = 'inline';
@@ -551,6 +588,7 @@ function playOutcomeAnimation(summary) {
         gameRootEl.classList.remove('shuttle-y-space');
         gameRootEl.classList.add('shuttle-y-reentry');
       }
+      setThrusterMode('off');
       setTimeout(() => {
         if (shuttleSvg) shuttleSvg.classList.remove('reentry-glow');
         if (explosionEl) {
@@ -575,6 +613,7 @@ function playOutcomeAnimation(summary) {
   } else {
     // successful: stay upright in space, then gentle re-entry glow
     setTimeout(() => {
+      setThrusterMode('off');
       if (shuttleSvg) shuttleSvg.classList.add('reentry-glow');
       setTimeout(() => {
         if (shuttleSvg) shuttleSvg.classList.remove('reentry-glow');
